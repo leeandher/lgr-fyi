@@ -2,9 +2,9 @@
   "name": "lgr-fyi",
   "version": "1.0.0",
   "description": "A custom-built URL Shortener using JavaScript",
-  "main": "index.js",
+  "main": "start.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon start.js"
   },
   "author": "Leander Rodrigues",
   "license": "MIT",

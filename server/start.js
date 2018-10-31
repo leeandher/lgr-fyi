@@ -1,10 +1,23 @@
+const mongoose = require("mongoose");
+
 //Import the environment setup
 require("dotenv").config({ path: "./settings.env" });
 
-//Start server on Port 7000
-app.listen(PORT, () => {
-  console.log("Server started on port", PORT);
+//Connect to the Database with the following settings
+mongoose.connect(
+  process.env.DATABASE,
+  {
+    keepAlive: true,
+    reconnectTries: Number.MAX_VALUE
+  }
+);
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on("error", err => {
+  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
+
+//Import the models
+require("./models/UrlShorten");
 
 //Start the app!
 const app = require("./app");
