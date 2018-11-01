@@ -4,7 +4,7 @@ mongoose.Promise = global.Promise;
 const urlShortenSchema = new mongoose.Schema({
   originalUrl: { type: String },
   shortUrl: { type: String },
-  urlCode: { type: String },
+  urlToken: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
