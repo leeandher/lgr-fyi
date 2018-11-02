@@ -7,5 +7,6 @@ build/
 # Miscellaneous
 .DS_Store
 *.env
+design/
 
 npm-debug.log*

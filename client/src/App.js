@@ -1,8 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 class App extends Component {
+  state = {
+    text: ""
+  };
+
+  testCall = async () => {
+    const res = await fetch("/api");
+    const text = await res.json();
+    console.log(text);
+    this.setState({ res });
+  };
+
   render() {
     return (
       <div className="App">
@@ -20,6 +31,11 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <div>
+          <button onClick={this.testCall}>Call!</button>
+          <p>This is the response from the GET request</p>
+          <p>{this.state.text}</p>
+        </div>
       </div>
     );
   }
