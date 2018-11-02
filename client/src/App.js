@@ -4,14 +4,29 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    text: ""
+    text: "",
+    testData: ""
   };
 
   testCall = async () => {
     const res = await fetch("/api");
-    const text = await res.json();
+    const { text } = await res.json();
     console.log(text);
-    this.setState({ res });
+    this.setState({ text });
+  };
+
+  handlesubmo = async e => {
+    e.preventDefault();
+    const res = await fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    });
+    const respo = await res.text();
+    console.log({ respo });
+    this.setState({ respo });
   };
 
   render() {
@@ -35,6 +50,18 @@ class App extends Component {
           <button onClick={this.testCall}>Call!</button>
           <p>This is the response from the GET request</p>
           <p>{this.state.text}</p>
+          <form onSubmit={this.handlesubmo}>
+            <label htmlFor="hecko">This is an input field</label>
+            <input
+              type="text"
+              name="hecko"
+              value={this.state.hecko}
+              onChange={e => this.setState({ hecko: e.target.value })}
+            />
+            <button type="submit"> SUBMO</button>
+          </form>
+          <p>This is the response from the POST request</p>
+          <p>{this.state.respo}</p>
         </div>
       </div>
     );

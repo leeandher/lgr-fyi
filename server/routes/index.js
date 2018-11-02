@@ -18,6 +18,7 @@ router.get("/api", (req, res) => {
   console.log("get req on api");
   res.send({ text: "This is coming from Express!" });
 });
+
 router.post("/api", (req, res) => {
   console.log(req.body);
   res.send("I am alive!");
