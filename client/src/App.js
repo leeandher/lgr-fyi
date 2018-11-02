@@ -1,32 +1,28 @@
 import React, { Component } from "react";
+import axios from "axios";
+
 import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
   state = {
-    text: "",
-    testData: ""
+    getRes: {},
+    postReq: "",
+    postRes: {}
   };
 
-  testCall = async () => {
-    const res = await fetch("/api");
-    const { text } = await res.json();
-    console.log(text);
-    this.setState({ text });
+  getr = async () => {
+    const { data } = await axios.get("/api");
+    this.setState({ getRes: data });
+    console.log("AXIOS GET:", data);
   };
 
-  handlesubmo = async e => {
+  postr = async e => {
     e.preventDefault();
-    const res = await fetch("/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(this.state)
-    });
-    const respo = await res.text();
-    console.log({ respo });
-    this.setState({ respo });
+    console.log(this.state.postReq);
+    const { data } = await axios.post("/api", { text: this.state.postReq });
+    this.setState({ postRes: data });
+    console.log("AXIOS POST RES", data);
   };
 
   render() {
@@ -34,34 +30,25 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
         <div>
-          <button onClick={this.testCall}>Call!</button>
-          <p>This is the response from the GET request</p>
-          <p>{this.state.text}</p>
-          <form onSubmit={this.handlesubmo}>
-            <label htmlFor="hecko">This is an input field</label>
+          <h2>Express, Axios and React</h2>
+          <button onClick={this.getr}>Make GET Request</button>
+          <p>{JSON.stringify(this.state.getRes)}</p>
+          <br />
+          <form onSubmit={this.postr}>
+            <label htmlFor="postReq">
+              Make POST Request <br />
+            </label>
             <input
               type="text"
-              name="hecko"
-              value={this.state.hecko}
-              onChange={e => this.setState({ hecko: e.target.value })}
+              name="postReq"
+              value={this.state.postReq}
+              onChange={e => this.setState({ postReq: e.target.value })}
             />
-            <button type="submit"> SUBMO</button>
+            <button type="submit">Submit</button>
           </form>
-          <p>This is the response from the POST request</p>
-          <p>{this.state.respo}</p>
+          <p>{JSON.stringify(this.state.postRes)}</p>
         </div>
       </div>
     );

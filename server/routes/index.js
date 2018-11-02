@@ -15,13 +15,12 @@ const urlController = require("../controllers/urlController");
 // );
 
 router.get("/api", (req, res) => {
-  console.log("get req on api");
   res.send({ text: "This is coming from Express!" });
 });
 
 router.post("/api", (req, res) => {
   console.log(req.body);
-  res.send("I am alive!");
+  res.send(req.body);
 });
 
 // router.get("/:token", urlController.performRedirect);
