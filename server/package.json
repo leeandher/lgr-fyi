@@ -13,7 +13,7 @@
     "express": "^4.16.4",
     "mongoose": "^5.3.8",
     "pug": "^2.0.3",
-    "shortid": "^2.2.13",
+    "short-unique-id": "^1.1.1",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {

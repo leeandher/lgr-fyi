@@ -18,7 +18,7 @@ mongoose.connection.on("error", err => {
 });
 
 //Import the models
-require("./models/UrlShorten");
+require("./models/UrlShortener");
 
 //Start the app!
 const app = require("./app");

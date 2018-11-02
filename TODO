@@ -1,2 +1,3 @@
 - add direct link to site name
 - configure front end
+- create errorhandlers for async reqs

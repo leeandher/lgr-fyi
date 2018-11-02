@@ -7,7 +7,12 @@ const urlController = require("../controllers/urlController");
 router.get("/", urlController.homePage);
 router.get("/error", urlController.error);
 
-router.post("/", urlController.createRedirect, urlController.homePage);
+router.post(
+  "/",
+  urlController.validate,
+  urlController.createRedirect,
+  urlController.homePage
+);
 router.get("/:token", urlController.performRedirect);
 
 module.exports = router;

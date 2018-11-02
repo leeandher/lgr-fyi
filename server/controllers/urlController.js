@@ -1,37 +1,42 @@
 const mongoose = require("mongoose");
-const shortid = require("shortid");
-const UrlShorten = mongoose.model("UrlShorten");
+const shortUniqueId = require("short-unique-id");
+const validUrl = require("valid-url");
+const UrlShortener = mongoose.model("UrlShortener");
 
-//TODO:
-//create errorhandling
-//create-react-app
-//setup views!
-exports.performRedirect = async (req, res) => {
-  const urlToken = req.params.token;
-  console.log(urlToken);
-  const link = await UrlShorten.findOne({ urlToken });
-  console.log("this is the link", link);
-  if (link) {
-    res.redirect(link.originalUrl);
-  } else {
-    res.redirect("/error");
+exports.validate = (req, res, next) => {
+  //Check if the user forgot to add 'http://'
+  const userLink = req.body.originalUrl;
+  for (const link of [userLink, `http://${userLink}`]) {
+    if (validUrl.isWebUri(link) && link.match(/\.\w{2,}$/im)) {
+      req.body.originalUrl = link;
+      return next();
+    }
   }
+  res.redirect("back");
 };
 
 exports.createRedirect = async (req, res, next) => {
-  // console.log(req.body);
-  req.body.urlToken = shortid.generate();
-  const dbEntry = await new UrlShorten(req.body).save();
-  console.log("this is the db", dbEntry);
-  res.locals.db = dbEntry;
+  let link;
+  const existingLink = await UrlShortener.findOne(req.body);
+  if (!existingLink) {
+    req.body.urlToken = new shortUniqueId().randomUUID(5);
+    link = await new UrlShortener(req.body).save();
+  }
+  res.locals.newLink = link || existingLink;
   next();
 };
 
-exports.homePage = (req, res) => {
-  const test = res.locals ? res.locals.db : {};
-  console.log(res.locals.db);
-  res.render("homepage", { title: "Welcome!", test });
+exports.performRedirect = async (req, res) => {
+  const urlToken = req.params.token;
+  const link = await UrlShortener.findOne({ urlToken });
+  res.redirect(link ? link.originalUrl : "/error");
 };
+
+exports.homePage = (req, res) => {
+  const newLink = res.locals ? res.locals.newLink : {};
+  res.render("homepage", { title: "Welcome!", newLink });
+};
+
 exports.error = (req, res) => {
   res.send("error has occured");
 };
