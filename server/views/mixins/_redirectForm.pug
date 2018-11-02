@@ -1,0 +1,6 @@
+mixin redirectForm()
+  .form
+    form(action="/" method="POST")
+      label(for="originalUrl") Original URL
+      input(type="text" name="originalUrl" required)  
+      input(type="submit" value="Save →")

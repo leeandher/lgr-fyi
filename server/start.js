@@ -8,7 +8,8 @@ mongoose.connect(
   process.env.DATABASE,
   {
     keepAlive: true,
-    reconnectTries: Number.MAX_VALUE
+    reconnectTries: Number.MAX_VALUE,
+    useNewUrlParser: true
   }
 );
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises

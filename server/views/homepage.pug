@@ -1,0 +1,9 @@
+extends base
+
+include mixins/_redirectForm
+
+block content
+  .inner
+    h2= JSON.stringify(test)
+    h2= title
+    +redirectForm()
