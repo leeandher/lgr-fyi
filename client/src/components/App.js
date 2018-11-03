@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import logo from "./logo.svg";
-import "./App.css";
+import logo from "../logo.svg";
+import "../css/App.css";
 
 class App extends Component {
   state = {
@@ -12,9 +12,17 @@ class App extends Component {
   };
 
   getr = async () => {
-    const { data } = await axios.get("/api");
-    this.setState({ getRes: data });
-    console.log("AXIOS GET:", data);
+    console.clear();
+    try {
+      const data = await axios.get("/fer16");
+      console.log(data);
+      // console.log(data);
+      // this.setState({ getRes: data });
+      // console.log("AXIOS GET:", data);
+    } catch (err) {
+      console.log(err.response);
+    }
+    // const { data } = await axios.get("/ase3sa");
   };
 
   postr = async e => {

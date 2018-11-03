@@ -12,7 +12,7 @@ exports.validate = (req, res, next) => {
       return next();
     }
   }
-  res.redirect("back");
+  next({ message: "Invalid URL" });
 };
 
 exports.createRedirect = async (req, res, next) => {
@@ -26,10 +26,11 @@ exports.createRedirect = async (req, res, next) => {
   next();
 };
 
-exports.performRedirect = async (req, res) => {
+exports.performRedirect = async (req, res, next) => {
   const urlToken = req.params.token;
   const link = await UrlShortener.findOne({ urlToken });
-  res.redirect(link ? link.originalUrl : "/error");
+  if (link) res.redirect(link.originalUrl);
+  res.status(404).send("Sorry! We coudln't find a link!");
 };
 
 exports.homePage = (req, res) => {

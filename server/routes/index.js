@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+const { catchErrors } = require("../handlers/errorHandlers");
 const urlController = require("../controllers/urlController");
 
 // const { catchErrors } = require("../handlers/errorHandlers");
@@ -22,6 +23,8 @@ router.post("/api", (req, res) => {
   console.log(req.body);
   res.send(req.body);
 });
+
+router.get("/:token", urlController.performRedirect);
 
 // router.get("/:token", urlController.performRedirect);
 
