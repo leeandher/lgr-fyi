@@ -14,7 +14,7 @@ mongoose.connect(
 );
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on("error", err => {
-  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
+  console.error(`Error on DB Connection → ${err.message}`);
 });
 
 //Import the models

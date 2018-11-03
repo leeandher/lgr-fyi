@@ -15,6 +15,13 @@ exports.validate = (req, res, next) => {
   next({ message: "Invalid URL" });
 };
 
+exports.sendRedirect = async (req, res) => {
+  const urlToken = req.params.token;
+  const link = await UrlShortener.findOne({ urlToken });
+  if (link) res.send(link);
+  res.status(404).send("Sorry about that!");
+};
+
 exports.createRedirect = async (req, res, next) => {
   let link;
   const existingLink = await UrlShortener.findOne(req.body);

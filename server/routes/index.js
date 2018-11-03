@@ -25,6 +25,7 @@ router.post("/api", (req, res) => {
 });
 
 router.get("/:token", urlController.performRedirect);
+router.get("/api/:token", urlController.sendRedirect);
 
 // router.get("/:token", urlController.performRedirect);
 

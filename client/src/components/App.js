@@ -14,13 +14,15 @@ class App extends Component {
   getr = async () => {
     console.clear();
     try {
-      const data = await axios.get("/fer16");
+      const data = await axios.get("/fes6");
       console.log(data);
       // console.log(data);
       // this.setState({ getRes: data });
       // console.log("AXIOS GET:", data);
     } catch (err) {
-      console.log(err.response);
+      // console.log(err.message);
+
+      console.log(err.message);
     }
     // const { data } = await axios.get("/ase3sa");
   };
