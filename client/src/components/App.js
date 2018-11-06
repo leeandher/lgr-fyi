@@ -6,9 +6,7 @@ import "../css/App.css";
 
 class App extends Component {
   state = {
-    getRes: {},
-    postReq: "",
-    postRes: {}
+    originalUrl: ""
   };
 
   getr = async () => {
@@ -35,6 +33,21 @@ class App extends Component {
     console.log("AXIOS POST RES", data);
   };
 
+  submitLink = async e => {
+    e.preventDefault();
+    console.log(this.state.originalUrl);
+    try {
+      const { data } = await axios.post("/api", this.state);
+      console.log("returned", { data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  handleChange = e => {
+    this.setState({ originalUrl: e.target.value });
+  };
+
   render() {
     return (
       <div className="App">
@@ -43,18 +56,16 @@ class App extends Component {
         </header>
         <div>
           <h2>Express, Axios and React</h2>
-          <button onClick={this.getr}>Make GET Request</button>
-          <p>{JSON.stringify(this.state.getRes)}</p>
-          <br />
-          <form onSubmit={this.postr}>
+          <form onSubmit={this.submitLink}>
             <label htmlFor="postReq">
               Make POST Request <br />
             </label>
             <input
               type="text"
-              name="postReq"
-              value={this.state.postReq}
-              onChange={e => this.setState({ postReq: e.target.value })}
+              name="originalUrl"
+              value={this.state.originalUrl}
+              onChange={this.handleChange}
+              placeholder="http://example.com"
             />
             <button type="submit">Submit</button>
           </form>

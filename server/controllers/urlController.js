@@ -15,22 +15,25 @@ exports.validate = (req, res, next) => {
   next({ message: "Invalid URL" });
 };
 
-exports.sendRedirect = async (req, res) => {
-  const urlToken = req.params.token;
-  const link = await UrlShortener.findOne({ urlToken });
-  if (link) res.send(link);
-  res.status(404).send("Sorry about that!");
-};
-
 exports.createRedirect = async (req, res, next) => {
+  //Check whether or not this link has already been made
   let link;
   const existingLink = await UrlShortener.findOne(req.body);
   if (!existingLink) {
     req.body.urlToken = new shortUniqueId().randomUUID(5);
     link = await new UrlShortener(req.body).save();
   }
-  res.locals.newLink = link || existingLink;
-  next();
+  //Send the link's shortUrl to the frontend
+  const newLink = link || existingLink;
+  res.send(newLink.shortUrl);
+};
+
+/*
+exports.sendRedirect = async (req, res) => {
+  const urlToken = req.params.token;
+  const link = await UrlShortener.findOne({ urlToken });
+  if (link) res.send(link);
+  res.status(404).send("Sorry about that!");
 };
 
 exports.performRedirect = async (req, res, next) => {
@@ -39,12 +42,4 @@ exports.performRedirect = async (req, res, next) => {
   if (link) res.redirect(link.originalUrl);
   res.status(404).send("Sorry! We coudln't find a link!");
 };
-
-exports.homePage = (req, res) => {
-  const newLink = res.locals ? res.locals.newLink : {};
-  res.render("homepage", { title: "Welcome!", newLink });
-};
-
-exports.error = (req, res) => {
-  res.send("error has occured");
-};
+*/
