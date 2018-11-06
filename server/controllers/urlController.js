@@ -12,31 +12,34 @@ exports.validate = (req, res, next) => {
       return next();
     }
   }
-  res.redirect("back");
+  next({ message: "Invalid URL" });
 };
 
 exports.createRedirect = async (req, res, next) => {
+  //Check whether or not this link has already been made
   let link;
   const existingLink = await UrlShortener.findOne(req.body);
   if (!existingLink) {
     req.body.urlToken = new shortUniqueId().randomUUID(5);
     link = await new UrlShortener(req.body).save();
   }
-  res.locals.newLink = link || existingLink;
-  next();
+  //Send the link's shortUrl to the frontend
+  const newLink = link || existingLink;
+  res.send(newLink.shortUrl);
 };
 
-exports.performRedirect = async (req, res) => {
+/*
+exports.sendRedirect = async (req, res) => {
   const urlToken = req.params.token;
   const link = await UrlShortener.findOne({ urlToken });
-  res.redirect(link ? link.originalUrl : "/error");
+  if (link) res.send(link);
+  res.status(404).send("Sorry about that!");
 };
 
-exports.homePage = (req, res) => {
-  const newLink = res.locals ? res.locals.newLink : {};
-  res.render("homepage", { title: "Welcome!", newLink });
+exports.performRedirect = async (req, res, next) => {
+  const urlToken = req.params.token;
+  const link = await UrlShortener.findOne({ urlToken });
+  if (link) res.redirect(link.originalUrl);
+  res.status(404).send("Sorry! We coudln't find a link!");
 };
-
-exports.error = (req, res) => {
-  res.send("error has occured");
-};
+*/
