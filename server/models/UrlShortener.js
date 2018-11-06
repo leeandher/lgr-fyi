@@ -7,6 +7,7 @@ const urlShortenerSchema = new mongoose.Schema({
   originalUrl: {
     type: String,
     trim: true,
+    unique: true,
     required: "Please provide a URL to shorten!"
   },
   urlToken: { type: String },
@@ -20,7 +21,7 @@ urlShortenerSchema.virtual("shortUrl").get(function() {
 });
 
 //Index the 'originalUrl' field
-storeSchema.index({ originalUrl: "text" });
+urlShortenerSchema.index({ originalUrl: "text" });
 
 //Export the model
 module.exports = mongoose.model("UrlShortener", urlShortenerSchema);
