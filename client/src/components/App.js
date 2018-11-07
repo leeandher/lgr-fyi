@@ -3,6 +3,8 @@ import axios from "axios";
 
 import Header from "./Header";
 
+import GlobalStyle from "../styles/GlobalStyle";
+
 class App extends Component {
   state = {
     originalUrl: ""
@@ -25,7 +27,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <React.Fragment>
+        <GlobalStyle />
         <Header tagline="Welcome to the party!" />
         <form onSubmit={this.submitLink}>
           <input
@@ -37,7 +40,7 @@ class App extends Component {
           />
           <button type="submit">Submit</button>
         </form>
-      </div>
+      </React.Fragment>
     );
   }
 }

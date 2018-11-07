@@ -1,15 +1,39 @@
 import React from "react";
+import styled from "styled-components";
+
+//Styles
+
+const TitleWrapper = styled.header`
+  border: 2px solid green;
+  background: grey;
+  padding: 15px;
+  margin: 10px auto;
+`;
+
+const Title = styled.h1`
+  background: palegoldenrod;
+  border: 2px solid paleturquoise;
+`;
+
+const Tagline = styled.article`
+  background: red;
+`;
+
+const BigDot = styled.span`
+  border: 2px solid black;
+`;
+
+//Render
 
 const Header = ({ tagline }) => (
-  <header className="top">
-    <h1 className="siteName">
+  <TitleWrapper>
+    <Title>
       lgr
-      <span>.</span>
+      <BigDot>.</BigDot>
       fyi
-    </h1>
-    <h3 className="tagline">{tagline}</h3>
-    <article>Here's how you get started:</article>
-  </header>
+    </Title>
+    <Tagline>{tagline}</Tagline>
+  </TitleWrapper>
 );
 
 export default Header;
