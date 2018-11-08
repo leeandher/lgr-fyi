@@ -2,23 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 //Styles
+const TitleWrapper = styled.header``;
 
-const TitleWrapper = styled.header`
-  border: 6px solid ${props => props.theme.accent};
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.7);
-  width: 80%;
+const TitleText = styled.h1`
+  margin: 0;
   font-size: 50px;
-  padding: 15px;
-  text-align: center;
-`;
-
-const Title = styled.h1`
   color: ${props => props.theme.accent};
 `;
 
 const Tagline = styled.article`
-  background: red;
+  font-size: 20px;
+  font-style: italic;
+  color: ${props => props.theme.accent};
 `;
 
 const Dot = styled.span`
@@ -27,14 +22,13 @@ const Dot = styled.span`
 `;
 
 //Render
-
 const Header = ({ tagline }) => (
   <TitleWrapper>
-    <Title>
+    <TitleText>
       lgr
       <Dot>.</Dot>
       fyi
-    </Title>
+    </TitleText>
     <Tagline>{tagline}</Tagline>
   </TitleWrapper>
 );

@@ -10,10 +10,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Coda'
   }
-  
+
   body {
     margin: 0;
-    background: linear-gradient(white, black) no-repeat center center;
+    background: url('../images/rawpixel-670749-unsplash.jpg') no-repeat center center;
     height: 100%;
   }
 `;

@@ -3,7 +3,7 @@ const baseTheme = {
   lightMid: "#9C9C9C",
   mid: "#494949",
   dark: "#000000",
-  accent: "#FF5D73"
+  accent: "#200288"
 };
 
 export default baseTheme;

@@ -10,3 +10,4 @@ build/
 design/
 
 npm-debug.log*
+/client/public/images
