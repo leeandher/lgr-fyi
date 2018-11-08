@@ -1,6 +1,30 @@
 import axios from "axios";
+import styled from "styled-components";
 
 import React, { Component } from "react";
+
+const StyledForm = styled.form`
+  input,
+  button {
+    border: 0;
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid transparent;
+    &:focus {
+      outline: 0;
+      border: 2px solid ${props => props.theme.accent};
+    }
+  }
+
+  input {
+    width: 75%;
+  }
+
+  button:hover {
+    background: ${props => props.theme.accent};
+    cursor: pointer;
+  }
+`;
 
 class URLForm extends Component {
   state = {
@@ -24,7 +48,7 @@ class URLForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.submitLink}>
+      <StyledForm onSubmit={this.submitLink}>
         <input
           type="text"
           name="originalUrl"
@@ -32,8 +56,8 @@ class URLForm extends Component {
           value={this.state.originalUrl}
           onChange={this.handleChange}
         />
-        <button type="submit">Submit</button>
-      </form>
+        <button type="submit">Shorten</button>
+      </StyledForm>
     );
   }
 }

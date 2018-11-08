@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 //Styles
-const TitleWrapper = styled.header``;
+const TitleWrapper = styled.header`
+  margin-bottom: 15px;
+`;
 
 const TitleText = styled.h1`
   margin: 0;
@@ -17,7 +19,7 @@ const Tagline = styled.article`
 `;
 
 const Dot = styled.span`
-  color: black;
+  color: ${props => props.theme.light};
   line-height: 0;
 `;
 

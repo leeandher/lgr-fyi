@@ -1,9 +1,9 @@
 const baseTheme = {
-  light: "#FFFFFF",
+  light: "#EFEFEF",
   lightMid: "#9C9C9C",
   mid: "#494949",
-  dark: "#000000",
-  accent: "#200288"
+  dark: "#272727",
+  accent: "#00CCCC"
 };
 
 export default baseTheme;

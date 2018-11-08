@@ -13,7 +13,10 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
-    background: url('../images/rawpixel-670749-unsplash.jpg') no-repeat center center;
+    ${
+      "" /* background: url('../images/rawpixel-670749-unsplash.jpg') no-repeat center center; */
+    }
+    background: ${baseTheme.dark};
     height: 100%;
   }
 `;
