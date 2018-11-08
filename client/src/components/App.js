@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 
 import Header from "./Header";
-import Footer from "./Footer";
-
-import GlobalStyle from "../styles/GlobalStyle";
 import URLForm from "./URLForm";
+import Footer from "./Footer";
 
 class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <GlobalStyle />
-        <Header />
+        <Header tagline="oh man" />
         <URLForm />
         <Footer />
       </React.Fragment>
