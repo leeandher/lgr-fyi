@@ -23,15 +23,7 @@ urlShortenerSchema.virtual("shortUrl").get(function() {
 //Index the 'originalUrl' field
 urlShortenerSchema.index({ originalUrl: "text" });
 
-//Define the hooks
-function addToCount(next) {
-  console.log(this.originalUrl);
-  next();
-}
-
-urlShortenerSchema.pre("findOne", function(next) {
-  console.log(this.originalUrl);
-});
+//TODO: figure out click counter
 
 //Export the model
 module.exports = mongoose.model("UrlShortener", urlShortenerSchema);

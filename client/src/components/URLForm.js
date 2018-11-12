@@ -33,7 +33,6 @@ class URLForm extends Component {
 
   submitLink = async e => {
     e.preventDefault();
-    console.log(this.state.originalUrl);
     try {
       const { data } = await axios.post("/api", this.state);
       console.log(data);
