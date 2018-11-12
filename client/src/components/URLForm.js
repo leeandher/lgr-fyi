@@ -36,7 +36,8 @@ class URLForm extends Component {
     console.log(this.state.originalUrl);
     try {
       const { data } = await axios.post("/api", this.state);
-      console.log("returned", { data });
+      console.log(data);
+      console.log("returned");
     } catch (err) {
       console.error(err);
     }

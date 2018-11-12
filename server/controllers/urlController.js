@@ -24,8 +24,8 @@ exports.createRedirect = async (req, res, next) => {
     link = await new UrlShortener(req.body).save();
   }
   //Send the link's shortUrl to the frontend
-  const newLink = link || existingLink;
-  res.send(newLink.shortUrl);
+  const returnLink = link || existingLink;
+  res.json({ link: returnLink.shortUrl, count: returnLink.clickCount });
 };
 
 /*
@@ -35,11 +35,11 @@ exports.sendRedirect = async (req, res) => {
   if (link) res.send(link);
   res.status(404).send("Sorry about that!");
 };
+*/
 
-exports.performRedirect = async (req, res, next) => {
+exports.performRedirect = async (req, res) => {
   const urlToken = req.params.token;
   const link = await UrlShortener.findOne({ urlToken });
   if (link) res.redirect(link.originalUrl);
   res.status(404).send("Sorry! We coudln't find a link!");
 };
-*/

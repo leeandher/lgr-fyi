@@ -12,7 +12,7 @@ const urlShortenerSchema = new mongoose.Schema({
   },
   urlToken: { type: String },
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  clickCount: { type: Number, default: 0 }
 });
 
 //Create the virtual field for the 'shortUrl'
@@ -22,6 +22,16 @@ urlShortenerSchema.virtual("shortUrl").get(function() {
 
 //Index the 'originalUrl' field
 urlShortenerSchema.index({ originalUrl: "text" });
+
+//Define the hooks
+function addToCount(next) {
+  console.log(this.originalUrl);
+  next();
+}
+
+urlShortenerSchema.pre("findOne", function(next) {
+  console.log(this.originalUrl);
+});
 
 //Export the model
 module.exports = mongoose.model("UrlShortener", urlShortenerSchema);

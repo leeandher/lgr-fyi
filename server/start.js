@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 //Import the environment setup
-require("dotenv").config({ path: "./settings.env" });
+require("dotenv").config({ path: "./settings-dev.env" });
 
 //Connect to the Database with the following settings
 mongoose.connect(

@@ -19,7 +19,7 @@ const Tagline = styled.article`
 `;
 
 const Dot = styled.span`
-  color: ${props => props.theme.light};
+  color: ${props => props.theme.dark};
   line-height: 0;
 `;
 
