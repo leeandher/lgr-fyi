@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const shortUniqueId = require("short-unique-id");
 const validUrl = require("valid-url");
-const UrlShortener = mongoose.model("UrlShortener");
+const ShortenedUrl = mongoose.model("ShortenedUrl");
 
 exports.validate = (req, res, next) => {
   //Check if the user forgot to add 'http://'
@@ -18,10 +18,10 @@ exports.validate = (req, res, next) => {
 exports.createRedirect = async (req, res, next) => {
   //Check whether or not this link has already been made
   let link;
-  const existingLink = await UrlShortener.findOne(req.body);
+  const existingLink = await ShortenedUrl.findOne(req.body);
   if (!existingLink) {
     req.body.urlToken = new shortUniqueId().randomUUID(5);
-    link = await new UrlShortener(req.body).save();
+    link = await new ShortenedUrl(req.body).save();
   }
   //Send the link's shortUrl to the frontend
   const returnLink = link || existingLink;
@@ -30,16 +30,17 @@ exports.createRedirect = async (req, res, next) => {
 
 exports.sendRedirect = async (req, res) => {
   const urlToken = req.params.token;
-  const returnLink = await UrlShortener.findOne({ urlToken });
+  const returnLink = await ShortenedUrl.findOne({ urlToken });
   if (!returnLink) res.status(404).send("Sorry about that!");
-  // res.redirect(returnLink.originalUrl);
 
-  res.json({ link: returnLink.originalUrl, count: returnLink.clickCount });
+  res.redirect(returnLink.originalUrl);
+  //G5EAX --> my site
+  // res.json({ link: returnLink.originalUrl, count: returnLink.clickCount });
 };
 
 exports.performRedirect = async (req, res) => {
   const urlToken = req.params.token;
-  const link = await UrlShortener.findOne({ urlToken });
+  const link = await ShortenedUrl.findOne({ urlToken });
   if (link) res.redirect(link.originalUrl);
   res.status(404).send("Sorry! We couldn't find a link!");
 };

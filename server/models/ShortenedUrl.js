@@ -2,8 +2,8 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-//Define the urlShortener schema
-const urlShortenerSchema = new mongoose.Schema({
+//Define the ShortenedUrl schema
+const shortenedUrlSchema = new mongoose.Schema({
   originalUrl: {
     type: String,
     trim: true,
@@ -16,14 +16,14 @@ const urlShortenerSchema = new mongoose.Schema({
 });
 
 //Create the virtual field for the 'shortUrl'
-urlShortenerSchema.virtual("shortUrl").get(function() {
+shortenedUrlSchema.virtual("shortUrl").get(function() {
   return `${process.env.BASE_URL}/${this.urlToken}`;
 });
 
 //Index the 'originalUrl' field
-urlShortenerSchema.index({ originalUrl: "text" });
+shortenedUrlSchema.index({ originalUrl: "text" });
 
 //TODO: figure out click counter
 
 //Export the model
-module.exports = mongoose.model("UrlShortener", urlShortenerSchema);
+module.exports = mongoose.model("ShortenedUrl", shortenedUrlSchema);
