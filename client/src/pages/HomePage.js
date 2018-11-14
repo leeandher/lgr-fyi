@@ -7,7 +7,7 @@ import GlobalStyle from "../styles/GlobalStyle";
 import baseTheme from "../styles/baseTheme";
 
 //Components
-import App from "./App";
+import App from "../components/App";
 
 const HomePage = () => (
   <ThemeProvider theme={baseTheme}>

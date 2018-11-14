@@ -8,17 +8,14 @@ class Redirector extends Component {
     link: ""
   };
 
-  redirect = async token => {
-    const { data } = await axios.get(`/api/${token}`);
-    this.setState({ isLoading: false, link: data.link });
-    window.location = data.link;
-  };
-
-  componentDidMount() {
+  async componentDidMount() {
     const { token } = this.props.match.params;
     try {
-      this.redirect(token);
+      const { data } = await axios.get(`/api/${token}`);
+      this.setState({ isLoading: false, link: data.link });
+      window.location = data.link;
     } catch (err) {
+      console.log("woops");
       this.setState({ isLoading: false, notFound: true });
     }
   }

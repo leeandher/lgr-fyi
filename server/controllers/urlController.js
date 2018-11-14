@@ -12,7 +12,7 @@ exports.validate = (req, res, next) => {
       return next();
     }
   }
-  next({ message: "Invalid URL" });
+  res.status(400).send("❌ Invalid URL! ❌");
 };
 
 exports.createRedirect = async (req, res, next) => {
