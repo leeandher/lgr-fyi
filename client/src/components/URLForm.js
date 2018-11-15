@@ -27,7 +27,7 @@ const StyledForm = styled.form`
 
   button:hover,
   button:focus {
-    background: ${props => props.theme.accent};
+    background: ${props => props.theme.accent__light};
     border: 1px solid ${props => props.theme.accent};
     cursor: pointer;
   }

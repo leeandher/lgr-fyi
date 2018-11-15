@@ -12,7 +12,11 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
-    font-family: 'Coda'
+    font-family: 'Coda';
+    &::selection{
+      color: ${baseTheme.dark};
+      background: ${baseTheme.accent__light}
+    }
   }
 
   html {

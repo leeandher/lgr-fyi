@@ -20,6 +20,7 @@ const Tagline = styled.article`
 
 const Dot = styled.span`
   color: ${props => props.theme.dark};
+  font-weight: normal;
   line-height: 0;
 `;
 
