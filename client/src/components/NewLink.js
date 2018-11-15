@@ -1,9 +1,11 @@
 import React from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FaRegClipboard } from "react-icons/fa";
+
 import styled from "styled-components";
 
 //Styles
 const NewLinkWrapper = styled.div`
-  background: beige;
   display: flex;
 `;
 
@@ -20,10 +22,22 @@ const Count = styled.div`
   border: 2px solid purple;
 `;
 
+const StyledIcon = styled(FaRegClipboard)`
+  color: ${props => props.theme.accent};
+`;
+
 //Render
 const NewLink = ({ link, originalUrl, count }) => (
   <NewLinkWrapper>
-    <ShortUrl>{link}</ShortUrl>
+    <ShortUrl>
+      {link}
+      <CopyToClipboard
+        text={link}
+        onCopy={() => console.log(`copied this link: ${link}`)}
+      >
+        <StyledIcon />
+      </CopyToClipboard>
+    </ShortUrl>
     <OGUrl href={link}>{originalUrl}</OGUrl>
     <Count>{count}</Count>
   </NewLinkWrapper>

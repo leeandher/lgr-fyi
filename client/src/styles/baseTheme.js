@@ -1,9 +1,17 @@
 const baseTheme = {
-  light: "#EFEFEF",
-  lightMid: "#9C9C9C",
+  borderRadiusDefault: "10px",
+  borderRadiusTop: "10px 10px 0 0",
+  borderRadiusBottom: "0 0 10px 10px",
+  borderRadiusRight: "0 10px 10px 0",
+  borderRadiusLeft: "10px 0 0 10px",
+
+  light: "#FEFFFE",
+
+  lightMid: "#C4C4C4",
   mid: "#494949",
   dark: "#272727",
-  accent: "#00CCCC"
+  accent: "#FF7733",
+  accent__light: "#FFD9C7"
 };
 
 export default baseTheme;

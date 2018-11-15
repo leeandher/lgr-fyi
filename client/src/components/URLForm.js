@@ -3,16 +3,13 @@ import styled from "styled-components";
 
 import React, { Component } from "react";
 
-import NewLink from "./NewLink";
-
 const StyledForm = styled.form`
-  border: 2px solid red;
   input,
   button {
     border: 0;
     padding: 10px;
     font-size: 18px;
-    border: 2px solid transparent;
+    border: 2px solid ${props => props.theme.lightMid};
     &:focus {
       outline: 0;
       border: 2px solid ${props => props.theme.accent};
@@ -21,18 +18,24 @@ const StyledForm = styled.form`
 
   input {
     width: 75%;
+    border-radius: ${props => props.theme.borderRadiusLeft};
   }
 
-  button:hover {
+  button {
+    border-radius: ${props => props.theme.borderRadiusRight};
+  }
+
+  button:hover,
+  button:focus {
     background: ${props => props.theme.accent};
+    border: 2px solid ${props => props.theme.accent};
     cursor: pointer;
   }
 `;
 
 class URLForm extends Component {
   state = {
-    originalUrl: "",
-    newLinks: []
+    originalUrl: ""
   };
 
   createLink = async e => {
@@ -49,11 +52,10 @@ class URLForm extends Component {
 
         //Save the original URL in state
         data.originalUrl = this.state.originalUrl;
-        const newLinks = [...this.state.newLinks, data];
-        this.setState({ newLinks });
+        this.props.addLink(data);
       })
       //Report any errors in console
-      .catch(err => console.error(err.response.data));
+      .catch(err => console.error(err.response ? err.response.data : err));
   };
 
   handleChange = e => {
@@ -61,9 +63,6 @@ class URLForm extends Component {
   };
 
   render() {
-    const newLinks = this.state.newLinks.map((linkData, i) => (
-      <NewLink {...linkData} key={i} />
-    ));
     return (
       <StyledForm onSubmit={this.createLink}>
         <input
@@ -74,7 +73,6 @@ class URLForm extends Component {
           onChange={this.handleChange}
         />
         <button type="submit">Shorten</button>
-        {newLinks}
       </StyledForm>
     );
   }

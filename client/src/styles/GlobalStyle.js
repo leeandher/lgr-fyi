@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     ${
       "" /* background: url('../images/rawpixel-670749-unsplash.jpg') no-repeat center center; */
     }
-    background: ${baseTheme.dark};
+    background: ${baseTheme.accent__light};
     height: 100%;
   }
 `;
