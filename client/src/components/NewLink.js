@@ -9,18 +9,17 @@ const NewLinkWrapper = styled.div`
   display: flex;
 `;
 
-const ShortUrl = styled.a`
+const ShortLink = styled.a`
   flex: 3;
-  border: 2px solid lime;
 `;
-const OGUrl = styled.a`
-  flex: 2;
-  border: 2px solid pink;
-  overflow: ellipse;
+const Original = styled.a`
+  flex: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
-const Count = styled.div`
+const Counter = styled.div`
   flex: 1;
-  border: 2px solid purple;
 `;
 
 const StyledIcon = styled(FaRegClipboard)`
@@ -30,7 +29,7 @@ const StyledIcon = styled(FaRegClipboard)`
 //Render
 const NewLink = ({ link, originalUrl, count }) => (
   <NewLinkWrapper>
-    <ShortUrl>
+    <ShortLink>
       {link}
       <CopyToClipboard
         text={link}
@@ -38,11 +37,11 @@ const NewLink = ({ link, originalUrl, count }) => (
       >
         <StyledIcon />
       </CopyToClipboard>
-    </ShortUrl>
-    <OGUrl title={link} href={link}>
+    </ShortLink>
+    <Original title={originalUrl} href={link}>
       {originalUrl}
-    </OGUrl>
-    <Count>{count}</Count>
+    </Original>
+    <Counter>{count}</Counter>
   </NewLinkWrapper>
 );
 

@@ -7,7 +7,7 @@ exports.validate = (req, res, next) => {
   //Check if the user forgot to add 'http://'
   const userLink = req.body.originalUrl;
   for (const link of [userLink, `http://${userLink}`]) {
-    if (validUrl.isWebUri(link) && link.match(/\.\w{2,}$/im)) {
+    if (validUrl.isWebUri(link)) {
       req.body.originalUrl = link;
       return next();
     }
