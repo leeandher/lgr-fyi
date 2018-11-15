@@ -10,12 +10,13 @@ const NewLinkWrapper = styled.div`
 `;
 
 const ShortUrl = styled.a`
-  flex: 1;
+  flex: 3;
   border: 2px solid lime;
 `;
 const OGUrl = styled.a`
-  flex: 1;
+  flex: 2;
   border: 2px solid pink;
+  overflow: ellipse;
 `;
 const Count = styled.div`
   flex: 1;
@@ -38,7 +39,9 @@ const NewLink = ({ link, originalUrl, count }) => (
         <StyledIcon />
       </CopyToClipboard>
     </ShortUrl>
-    <OGUrl href={link}>{originalUrl}</OGUrl>
+    <OGUrl title={link} href={link}>
+      {originalUrl}
+    </OGUrl>
     <Count>{count}</Count>
   </NewLinkWrapper>
 );

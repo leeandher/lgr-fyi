@@ -9,10 +9,10 @@ const StyledForm = styled.form`
     border: 0;
     padding: 10px;
     font-size: 18px;
-    border: 2px solid ${props => props.theme.lightMid};
+    border: 1px solid ${props => props.theme.lightMid};
     &:focus {
       outline: 0;
-      border: 2px solid ${props => props.theme.accent};
+      border: 1px solid ${props => props.theme.accent};
     }
   }
 
@@ -28,7 +28,7 @@ const StyledForm = styled.form`
   button:hover,
   button:focus {
     background: ${props => props.theme.accent};
-    border: 2px solid ${props => props.theme.accent};
+    border: 1px solid ${props => props.theme.accent};
     cursor: pointer;
   }
 `;
