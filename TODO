@@ -1,5 +1,8 @@
 
 -save links in local storage
+-clear form after submit
+-left align columns
+-prevent doubling up (by clicking)
 
 - create errorhandlers for async reqs
 - learn about service workers

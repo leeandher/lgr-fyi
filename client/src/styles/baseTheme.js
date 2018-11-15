@@ -11,7 +11,8 @@ const baseTheme = {
   mid: "#494949",
   dark: "#272727",
   accent: "#FF7733",
-  accent__light: "#FFD9C7"
+  accent__light: "#FFD9C7",
+  accent__dark: "#E15634"
 };
 
 export default baseTheme;
