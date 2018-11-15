@@ -24,15 +24,22 @@ const Dot = styled.span`
   line-height: 0;
 `;
 
+const NonStyledAnchor = styled.a`
+  color: inherit;
+  text-decoration: inherit;
+`;
+
 //Render
 const Header = ({ tagline }) => (
   <TitleWrapper>
-    <TitleText>
-      lgr
-      <Dot>.</Dot>
-      fyi
-    </TitleText>
-    <Tagline>{tagline}</Tagline>
+    <NonStyledAnchor href="http://lgr.fyi">
+      <TitleText>
+        lgr
+        <Dot>.</Dot>
+        fyi
+      </TitleText>
+      <Tagline>{tagline}</Tagline>
+    </NonStyledAnchor>
   </TitleWrapper>
 );
 

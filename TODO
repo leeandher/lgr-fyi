@@ -1,5 +1,7 @@
-- add direct link to site name
-- configure front end
+
+-make lgr.fyi links non-shortanable
+-save links in local storage
+
 - create errorhandlers for async reqs
 - learn about service workers
 - learn about testing
