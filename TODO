@@ -1,5 +1,4 @@
 
--make lgr.fyi links non-shortanable
 -save links in local storage
 
 - create errorhandlers for async reqs

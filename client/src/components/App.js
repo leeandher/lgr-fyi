@@ -29,6 +29,15 @@ class App extends Component {
     newLinks: []
   };
 
+  componentDidMount() {
+    const newLinks = localStorage.getItem("userLinks");
+    if (newLinks) this.setState({ newLinks: JSON.parse(newLinks) });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("userLinks", JSON.stringify(this.state.newLinks));
+  }
+
   createNewLinks = newLinks => {
     this.setState({ newLinks });
   };
