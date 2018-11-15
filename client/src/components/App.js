@@ -11,7 +11,7 @@ const AppWrapper = styled.section`
   text-align: center;
   background: ${props => props.theme.light};
   padding: 25px;
-  margin: 20px;
+  max-width: 960px;
   border: 1px solid ${props => props.theme.accent};
   border-radius: ${props => props.theme.borderRadiusDefault};
 `;
