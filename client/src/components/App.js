@@ -43,6 +43,13 @@ class App extends Component {
   };
 
   addLink = link => {
+    const linkRepeated = Boolean(
+      this.state.newLinks.filter(
+        linkData => linkData.originalUrl === link.originalUrl
+      ).length
+    );
+    //TODO: Add a snarky remark
+    if (linkRepeated) return;
     const newLinks = [...this.state.newLinks, link];
     this.setState({ newLinks });
   };

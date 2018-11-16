@@ -52,6 +52,11 @@ class URLForm extends Component {
 
         //Save the original URL in state
         data.originalUrl = this.state.originalUrl;
+
+        //Clear the form
+        this.setState({ originalUrl: "" });
+
+        //Show the link
         this.props.addLink(data);
       })
       //Report any errors in console

@@ -3,18 +3,24 @@ const shortUniqueId = require("short-unique-id");
 const validUrl = require("valid-url");
 const ShortenedUrl = mongoose.model("ShortenedUrl");
 
-exports.validate = (req, res, next) => {
+//Also check if the user forgot to add 'http://'
+exports.validateUrl = (req, res, next) => {
   const userLink = req.body.originalUrl;
-  //Ensure they don't shorten a shortened link
-  const siteRegEx = /lgr\.fyi\/\w{5}/i;
   for (const link of [userLink, `http://${userLink}`]) {
-    //Also check if the user forgot to add 'http://'
-    if (validUrl.isWebUri(link) && !siteRegEx.test(link)) {
+    if (validUrl.isWebUri(link) && link.includes(".")) {
       req.body.originalUrl = link;
       return next();
     }
   }
   res.status(400).send("❌ Invalid URL! ❌");
+};
+
+//Ensure they don't shorten a shortened link
+exports.preventNesting = (req, res, next) => {
+  const userLink = req.body.originalUrl;
+  const siteRegEx = /lgr\.fyi\/\w{5}/i;
+  if (!siteRegEx.test(userLink)) return next();
+  res.status(400).send("❌ Nice try! You can't shorten your short links!❌");
 };
 
 exports.createRedirect = async (req, res, next) => {

@@ -12,8 +12,10 @@ const NewLinkWrapper = styled.div`
 
 const ShortLink = styled.a`
   flex: 3;
+  text-align: left;
   position: relative;
 `;
+
 const Original = styled.a`
   flex: 5;
   align-self: flex-end;
@@ -22,6 +24,7 @@ const Original = styled.a`
   text-overflow: ellipsis;
   color: ${props => props.theme.dark};
 `;
+
 const Counter = styled.p`
   flex: 1;
   margin: 0;
