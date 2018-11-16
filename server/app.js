@@ -26,11 +26,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   })
 // );
 
+//Allow for notification flashes
+// app.use(flash());
+
 //Use our specified routes
 app.use("/api", apiRoutes);
 app.use("/:token", urlController.performRedirect);
-app.use(express.static(path.join(__dirname + "./../client/build")));
+app.use(express.static(path.join(__dirname, "/../client/build")));
 
-app.use(errorHandlers.handleIt);
+// app.use(errorHandlers.handleIt);
 
 module.exports = app;

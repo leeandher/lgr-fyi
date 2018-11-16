@@ -7,7 +7,11 @@ const router = express.Router();
 
 const urlController = require("../controllers/urlController");
 
-router.post("/", urlController.validateUrl, urlController.createRedirect);
-router.get("/:token", urlController.sendRedirect);
+router.post(
+  "/",
+  urlController.validateUrl,
+  urlController.preventNesting,
+  urlController.createRedirect
+);
 
 module.exports = router;

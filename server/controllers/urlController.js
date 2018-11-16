@@ -46,9 +46,12 @@ exports.sendRedirect = async (req, res) => {
   // res.json({ link: returnLink.originalUrl, count: returnLink.clickCount });
 };
 
-exports.performRedirect = async (req, res) => {
+exports.performRedirect = async (req, res, next) => {
   const urlToken = req.params.token;
+  console.log(urlToken);
   const link = await ShortenedUrl.findOne({ urlToken });
   if (link) res.redirect(link.originalUrl);
-  res.status(404).send("Sorry! We couldn't find a link!");
+  // next("");
+  // res.status(404).send("Sorry! We couldn't find a link!");
+  next();
 };
