@@ -51,12 +51,20 @@ class App extends Component {
     //TODO: Add a snarky remark
     if (linkRepeated) return;
     const newLinks = [...this.state.newLinks, link];
+
+    this.setState({ newLinks });
+  };
+
+  removeLink = originalUrl => {
+    const newLinks = this.state.newLinks.filter(
+      link => link.originalUrl !== originalUrl
+    );
     this.setState({ newLinks });
   };
 
   renderLinks() {
     const newLinks = this.state.newLinks.map((linkData, i) => (
-      <NewLink {...linkData} key={i} />
+      <NewLink {...linkData} removeLink={this.removeLink} key={i} />
     ));
     return newLinks.length ? (
       <React.Fragment>

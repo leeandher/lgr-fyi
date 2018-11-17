@@ -38,8 +38,8 @@ const Header = ({ tagline }) => (
         <Dot>.</Dot>
         fyi
       </TitleText>
-      <Tagline>{tagline}</Tagline>
     </NonStyledAnchor>
+    <Tagline>{tagline}</Tagline>
   </TitleWrapper>
 );
 

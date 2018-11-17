@@ -13,12 +13,15 @@ const StylishHeader = styled.div`
 `;
 
 const ShortLink = styled.h3`
-  flex: 3;
+  flex: 6;
 `;
 const Original = styled.h3`
-  flex: 5;
+  flex: 10;
 `;
 const Counter = styled.h3`
+  flex: 2;
+`;
+const Deleter = styled.h3`
   flex: 1;
 `;
 
@@ -28,6 +31,7 @@ const NewLinkHeader = () => (
     <ShortLink>Short Link</ShortLink>
     <Original>Original URL</Original>
     <Counter>Clicks</Counter>
+    <Deleter />
   </StylishHeader>
 );
 

@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const errorHandlers = require("./handlers/errorHandlers");
 const path = require("path");
+const flash = require("connect-flash");
 
 const urlController = require("./controllers/urlController");
 const apiRoutes = require("./routes/api");
@@ -26,14 +27,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   })
 // );
 
-//Allow for notification flashes
-// app.use(flash());
+// Allow for notification flashes
+app.use(flash());
 
 //Use our specified routes
 app.use("/api", apiRoutes);
 app.use("/:token", urlController.performRedirect);
-app.use(express.static(path.join(__dirname, "/../client/build")));
+app.use(express.static(path.join(__dirname, "./../client/build")));
 
-// app.use(errorHandlers.handleIt);
+// // If that above routes didnt work, we 404 them and forward to error handler
+// app.use(errorHandlers.notFound);
+
+// // One of our error handlers will see if these errors are just validation errors
+// app.use(errorHandlers.flashValidationErrors);
+
+// // Otherwise this was a really bad error we didn't expect! Shoot eh
+// if (app.get("env") === "development") {
+//   /* Development Error Handler - Prints stack trace */
+//   app.use(errorHandlers.developmentErrors);
+// }
+
+// // production error handler
+// app.use(errorHandlers.productionErrors);
 
 module.exports = app;
