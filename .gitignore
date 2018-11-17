@@ -10,4 +10,12 @@ build/
 design/
 
 npm-debug.log*
-/client/public/images
+
+deploy/
+*.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+/.elasticbeanstalk

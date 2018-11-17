@@ -1,9 +1,6 @@
 
--save links in local storage
--clear form after submit
--left align columns
--prevent doubling up (by clicking)
-
+- fix background color resizing
+- style tabbing to links
 - create errorhandlers for async reqs
 - learn about service workers
 - learn about testing
