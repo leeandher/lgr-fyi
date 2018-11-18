@@ -1,5 +1,4 @@
 const express = require("express");
-const path = require("path");
 
 const router = express.Router();
 
@@ -11,7 +10,7 @@ router.post(
   "/",
   urlController.validateUrl,
   urlController.preventNesting,
-  urlController.createRedirect
+  urlController.createShortLink
 );
 
 module.exports = router;

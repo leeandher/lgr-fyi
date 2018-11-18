@@ -19,7 +19,8 @@ exports.catchErrors = fn => {
 exports.notFound = (req, res, next) => {
   const err = new Error("Not Found");
   err.status = 404;
-  res.send(err);
+  req.flash("error", "how did u do that");
+  res.status(404).send("you 404");
   // next(err);
 };
 

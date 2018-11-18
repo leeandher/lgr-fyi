@@ -1,6 +1,9 @@
+//Modules
 const mongoose = require("mongoose");
 const shortUniqueId = require("short-unique-id");
 const validUrl = require("valid-url");
+
+//Models
 const ShortenedUrl = mongoose.model("ShortenedUrl");
 
 //Also check if the user forgot to add 'http://'
@@ -12,7 +15,8 @@ exports.validateUrl = (req, res, next) => {
       return next();
     }
   }
-  res.status(400).send("❌ Invalid URL! ❌");
+  req.flash("error", "wtf u doiing");
+  // res.status(400).send("❌ Invalid URL! ❌");
 };
 
 //Ensure they don't shorten a shortened link
@@ -23,7 +27,8 @@ exports.preventNesting = (req, res, next) => {
   res.status(400).send("❌ Nice try! You can't shorten your short links!❌");
 };
 
-exports.createRedirect = async (req, res, next) => {
+//Create the short link!
+exports.createShortLink = async (req, res, next) => {
   //Check whether or not this link has already been made
   let link;
   const existingLink = await ShortenedUrl.findOne(req.body);
@@ -34,24 +39,4 @@ exports.createRedirect = async (req, res, next) => {
   //Send the link's shortUrl to the frontend
   const returnLink = link || existingLink;
   res.json({ link: returnLink.shortUrl, count: returnLink.clickCount });
-};
-
-exports.sendRedirect = async (req, res) => {
-  const urlToken = req.params.token;
-  const returnLink = await ShortenedUrl.findOne({ urlToken });
-  if (!returnLink) res.status(404).send("Sorry about that!");
-
-  res.redirect(returnLink.originalUrl);
-  //G5EAX --> my site
-  // res.json({ link: returnLink.originalUrl, count: returnLink.clickCount });
-};
-
-exports.performRedirect = async (req, res, next) => {
-  const urlToken = req.params.token;
-  console.log(urlToken);
-  const link = await ShortenedUrl.findOne({ urlToken });
-  if (link) res.redirect(link.originalUrl);
-  // next("");
-  // res.status(404).send("Sorry! We couldn't find a link!");
-  next();
 };
