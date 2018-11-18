@@ -8,7 +8,20 @@ import styled from "styled-components";
 const NewLinkWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 5px 0;
+
+  a {
+    padding: 10px;
+    border-radius: ${props => props.theme.borderRadiusDefault};
+    color: ${props => props.theme.dark};
+    text-decoration: none;
+
+    &:focus {
+      text-decoration: underline ${props => props.theme.accent};
+      outline: 0;
+      box-shadow: inset #aaa 0 0 8px;
+    }
+  }
 `;
 
 const ShortLink = styled.a`
@@ -22,7 +35,6 @@ const Original = styled.a`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${props => props.theme.dark};
 `;
 
 const Counter = styled.p`
@@ -57,17 +69,18 @@ const StyledDeleter = styled.div`
 //Render
 const NewLink = ({ link, originalUrl, count, removeLink }) => (
   <NewLinkWrapper>
-    <ShortLink>
-      <CopyToClipboard
-        text={link}
-        onCopy={() =>
-          console.log(`A link has been copied to your clipboard: ${link}`)
-        }
-      >
+    <CopyToClipboard
+      text={link}
+      onCopy={() =>
+        console.log(`A link has been copied to your clipboard: ${link}`)
+      }
+      tabIndex="0"
+    >
+      <ShortLink>
         <StyledClip />
-      </CopyToClipboard>
-      {link}
-    </ShortLink>
+        {link}
+      </ShortLink>
+    </CopyToClipboard>
     <Original title={originalUrl} href={link}>
       {originalUrl}
     </Original>
