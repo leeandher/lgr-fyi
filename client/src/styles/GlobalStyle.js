@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     &::before {
       background: ${baseTheme.accent__light};
       content: "";
-      position: absolute;
+      position: fixed;
       z-index: -1;
       top: 0; left: 0;
       width: 100%; height: 100%;

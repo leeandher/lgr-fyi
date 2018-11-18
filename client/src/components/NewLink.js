@@ -33,7 +33,7 @@ const Counter = styled.p`
 const StyledClip = styled(GoClippy)`
   color: ${props => props.theme.accent};
   margin-bottom: -3px;
-  margin-right: 6px;
+  margin-right: 20px;
   height: 25px;
   width: 25px;
   &:hover {
