@@ -20,12 +20,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
+    height: 100%;
     animation: ${colorize} 30s linear infinite forwards;
   }
 
   body {
-    margin: 20px;
-    height: 100%;
+    padding: 25px;
+    min-height: 100%;
+    margin: 0;
     &::before {
       background: ${baseTheme.accent__light};
       content: "";
