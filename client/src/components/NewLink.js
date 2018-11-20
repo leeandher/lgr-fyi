@@ -11,7 +11,8 @@ const NewLinkWrapper = styled.div`
   margin: 5px 0;
 
   a {
-    padding: 10px;
+    margin: 5px;
+    padding: 5px;
     border-radius: ${props => props.theme.borderRadiusDefault};
     color: ${props => props.theme.dark};
     text-decoration: none;

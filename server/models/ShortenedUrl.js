@@ -23,10 +23,5 @@ shortenedUrlSchema.virtual("shortUrl").get(function() {
 //Index the 'originalUrl' field
 shortenedUrlSchema.index({ originalUrl: "text" });
 
-// shortenedUrlSchema.post("findOne", function(link) {
-//   link.clickCount++;
-//   link.save();
-// });
-
 //Export the model
 module.exports = mongoose.model("ShortenedUrl", shortenedUrlSchema);
