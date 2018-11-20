@@ -1,7 +1,6 @@
-import axios from "axios";
 import styled from "styled-components";
 
-import React, { Component } from "react";
+import React from "react";
 
 const StyledForm = styled.form`
   input,
@@ -33,54 +32,17 @@ const StyledForm = styled.form`
   }
 `;
 
-class URLForm extends Component {
-  state = {
-    originalUrl: ""
-  };
-
-  createLink = async e => {
-    //Don't reload the page
-    e.preventDefault();
-
-    axios
-      //Use the API to create a shortlink
-      .post("/api", { originalUrl: this.state.originalUrl })
-      //Once we receive the short link
-      .then(res => {
-        //Extract the data from the API
-        const { data } = res;
-
-        //Save the original URL in state
-        data.originalUrl = this.state.originalUrl;
-
-        //Clear the form
-        this.setState({ originalUrl: "" });
-
-        //Show the link
-        this.props.addLink(data);
-      })
-      //Report any errors in console
-      .catch(err => console.error(err.response ? err.response.data : err));
-  };
-
-  handleChange = e => {
-    this.setState({ originalUrl: e.target.value });
-  };
-
-  render() {
-    return (
-      <StyledForm onSubmit={this.createLink}>
-        <input
-          type="text"
-          name="originalUrl"
-          placeholder="http://example.com"
-          value={this.state.originalUrl}
-          onChange={this.handleChange}
-        />
-        <button type="submit">Shorten</button>
-      </StyledForm>
-    );
-  }
-}
+const URLForm = ({ createLink, originalUrl, handleChange }) => (
+  <StyledForm onSubmit={createLink}>
+    <input
+      type="text"
+      name="originalUrl"
+      placeholder="http://example.com"
+      value={originalUrl}
+      onChange={handleChange}
+    />
+    <button type="submit">Shorten</button>
+  </StyledForm>
+);
 
 export default URLForm;

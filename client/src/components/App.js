@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 import Title from "./Title";
 import URLForm from "./URLForm";
@@ -27,32 +28,72 @@ const StylishLineBreak = styled.hr`
 
 class App extends Component {
   state = {
+    originalUrl: "",
     newLinks: []
   };
 
   componentDidMount() {
-    const newLinks = localStorage.getItem("userLinks");
-    if (newLinks) this.setState({ newLinks: JSON.parse(newLinks) });
+    //The reverse is because the must be input from oldest --> recent
+    const linkList = JSON.parse(localStorage.getItem("linkList"));
+    if (linkList) {
+      this.setState({ newLinks: linkList });
+      this.refreshLinks(linkList);
+    }
   }
 
   componentDidUpdate() {
-    localStorage.setItem("userLinks", JSON.stringify(this.state.newLinks));
+    const linkList = this.state.newLinks;
+    localStorage.setItem("linkList", JSON.stringify(linkList));
   }
 
-  createNewLinks = newLinks => {
-    this.setState({ newLinks });
+  refreshLinks = async links => {
+    if (!links.length) return;
+    const fetchArr = links.map(link =>
+      axios.post("/api", { originalUrl: link.originalUrl })
+    );
+    await Promise.all(fetchArr)
+      .then(newLinkData => {
+        newLinkData.forEach((res, i) => {
+          res.data.originalUrl = links[i].originalUrl;
+          this.addLink(res.data);
+        });
+      })
+      .catch(err => console.error(err.response ? err.response.data : err));
+  };
+
+  createLink = async e => {
+    //Don't reload the page
+    e.preventDefault();
+
+    axios
+      //Use the API to create a shortlink
+      .post("/api", { originalUrl: this.state.originalUrl })
+      //Once we receive the short link
+      .then(res => {
+        //Extract the data from the API
+        const { data } = res;
+
+        //Save the original URL in state
+        data.originalUrl = this.state.originalUrl;
+
+        //Clear the form
+        this.setState({ originalUrl: "" });
+
+        //Show the link
+        this.addLink(data);
+      })
+      //Report any errors in console
+      .catch(err => console.error(err.response ? err.response.data : err));
   };
 
   addLink = link => {
-    const linkRepeated = Boolean(
-      this.state.newLinks.filter(
-        linkData => linkData.originalUrl === link.originalUrl
-      ).length
+    //Filter any repeats
+    const newLinks = this.state.newLinks.filter(
+      linkData => linkData.originalUrl !== link.originalUrl
     );
-    //TODO: Add a snarky remark
-    if (linkRepeated) return;
-    const newLinks = [...this.state.newLinks, link];
 
+    //Add the new link
+    newLinks.unshift(link);
     this.setState({ newLinks });
   };
 
@@ -78,13 +119,15 @@ class App extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <AppWrapper>
-          <Title tagline="The fast, dependable, open source URL Shortener." />
-          <URLForm addLink={this.addLink} />
-          {this.renderLinks()}
-        </AppWrapper>
-      </React.Fragment>
+      <AppWrapper>
+        <Title tagline="The fast, dependable, open source URL Shortener." />
+        <URLForm
+          createLink={this.createLink}
+          originalUrl={this.state.originalUrl}
+          handleChange={e => this.setState({ originalUrl: e.target.value })}
+        />
+        {this.renderLinks()}
+      </AppWrapper>
     );
   }
 }
