@@ -38,7 +38,7 @@ app.use(
 app.use(flash());
 
 //Use our specified routes
-app.use("/", express.static(path.join(__dirname, "/../client/build")));
+app.use("/", express.static(path.join(__dirname, "/build")));
 app.use("/api", apiRoutes);
 app.use(
   "/:token",
