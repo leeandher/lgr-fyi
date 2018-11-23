@@ -4,3 +4,6 @@
 - create errorhandlers for async reqs
 - learn about service workers
 - learn about testing
+
+- make responsive on mobile
+- add HTTPS
