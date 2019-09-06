@@ -1,26 +1,25 @@
-const express = require("express");
-const session = require("express-session");
-const mongoose = require("mongoose");
-const MongoStore = require("connect-mongo")(session);
+const express = require('express')
+const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const flash = require("connect-flash");
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
-const apiRoutes = require("./routes/api");
-const redirectController = require("./controllers/redirectController");
-const errorHandlers = require("./handlers/errorHandlers");
+const apiRoutes = require('./routes/api')
+const redirectController = require('./controllers/redirectController')
+const errorHandlers = require('./handlers/errorHandlers')
 
 //Create our Express app
-const app = express();
+const app = express()
 
 //Attach form data to req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
-//Adds cookies to req.cookies
-// app.use(cookieParser());
+// Adds cookies to req.cookies
+app.use(cookieParser())
 
 // Sessions allow us to store data on visitors from request to request
 // This keeps users logged in and allows us to send flash messages
@@ -30,23 +29,23 @@ app.use(
     key: process.env.KEY,
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
-  })
-);
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  }),
+)
 
 //Allow for notification flashes
-app.use(flash());
+app.use(flash())
 
 //Use our specified routes
-app.use("/", express.static(path.join(__dirname, "/../client/build")));
-app.use("/api", apiRoutes);
+app.use('/', express.static(path.join(__dirname, '/../client/build')))
+app.use('/api', apiRoutes)
 app.use(
-  "/:token",
-  errorHandlers.catchErrors(redirectController.performRedirect)
-);
+  '/:token',
+  errorHandlers.catchErrors(redirectController.performRedirect),
+)
 
 // If that above routes didnt work, we 404 them and forward to error handler
-app.use(errorHandlers.notFound);
+app.use(errorHandlers.notFound)
 
 // // One of our error handlers will see if these errors are just validation errors
 // app.use(errorHandlers.flashValidationErrors);
@@ -60,4 +59,4 @@ app.use(errorHandlers.notFound);
 // // production error handler
 // app.use(errorHandlers.productionErrors);
 
-module.exports = app;
+module.exports = app
