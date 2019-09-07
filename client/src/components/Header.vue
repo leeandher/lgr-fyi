@@ -5,7 +5,6 @@
       <span class="red">.</span>
       <span>fyi</span>
     </h1>
-    <img alt="Vue logo" src="../assets/link_shortener.svg" height="500" width="500" />
   </header>
 </template>
 
