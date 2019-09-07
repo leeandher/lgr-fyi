@@ -11,6 +11,7 @@ mongoose.connect(process.env.DATABASE_URI, {
   reconnectTries: 300,
   reconnectInterval: 1000,
   useNewUrlParser: true,
+  useCreateIndex: true,
 })
 mongoose.Promise = global.Promise
 mongoose.connection.on('error', err => console.error(`Error on DB Connection → ${err.message}`))

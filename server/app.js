@@ -7,11 +7,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 
-const apiRoutes = require('./routes/api')
-const redirectController = require('./controllers/redirectController')
-const errorHandlers = require('./handlers/errorHandlers')
+const api = require('./api/v2')
 
-//Create our Express app
 const app = express()
 
 //Attach form data to req.body
@@ -21,8 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Adds cookies to req.cookies
 app.use(cookieParser())
 
-// Sessions allow us to store data on visitors from request to request
-// This keeps users logged in and allows us to send flash messages
+// Create sessions
 app.use(
   session({
     secret: process.env.SECRET,
@@ -33,19 +29,10 @@ app.use(
   }),
 )
 
-//Allow for notification flashes
-app.use(flash())
-
-//Use our specified routes
-app.use('/', express.static(path.join(__dirname, '/../client/build')))
-app.use('/api', apiRoutes)
-app.use(
-  '/:token',
-  errorHandlers.catchErrors(redirectController.performRedirect),
-)
+app.use('/', api)
 
 // If that above routes didnt work, we 404 them and forward to error handler
-app.use(errorHandlers.notFound)
+// app.use(errorHandlers.notFound)
 
 // // One of our error handlers will see if these errors are just validation errors
 // app.use(errorHandlers.flashValidationErrors);
