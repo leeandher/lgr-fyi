@@ -26,6 +26,7 @@
       <span>Well, you came to the right place</span>
       <span class="red">.</span>
     </p>
+    <hr />
   </div>
 </template>
 
@@ -42,10 +43,12 @@ class Description extends Vue {
 export default Description;
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .description {
   font-size: 1.5rem;
+  @media screen and (max-width: 1000px) {
+    font-size: 1.4rem;
+  }
 }
 p {
   margin: 0.5rem;

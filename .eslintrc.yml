@@ -17,6 +17,9 @@ rules:
   indent:
     - error
     - 2
+  comma-dangle:
+    - error
+    - always
   linebreak-style:
     - error
     - windows
