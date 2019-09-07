@@ -28,48 +28,68 @@ html {
   box-sizing: border-box;
 }
 body {
-  overflow: hidden;
   font-size: 1.5rem;
+  padding: 2rem;
+  overflow-x: hidden;
 }
 body:after {
   content: "";
-  position: absolute;
+  position: fixed;
   z-index: -1;
-  top: -50%;
+  top: 0%;
   left: 10%;
-  height: 200vh;
+  height: 100%;
   width: 80vw;
   background: white;
-  transform: rotate(6deg);
+  transform: skew(-2deg);
   @media screen and (max-width: 1000px) {
-    transform: rotate(0deg);
+    transform: none;
     width: calc(100% - 50px);
     left: 25px;
+  }
+  @media screen and (max-width: 500px) {
+    transform: none;
+    width: calc(100% - 20px);
+    left: 10px;
   }
 }
 body:before {
   content: "";
   position: absolute;
   z-index: -1;
-  top: -50%;
-  left: 5%;
-  height: 200vh;
-  width: 10vw;
+  left: -2rem;
+  top: -2rem;
+  width: 100vw;
+  height: 150vh;
   background: #ff6347;
-  transform: rotate(6deg);
+  transform: skew(45deg);
   @media screen and (max-width: 1000px) {
-    transform: rotate(45deg);
-    width: 20vh;
+    transform: skew(-45deg);
+    width: 40vh;
+    top: -40%;
     left: 50%;
   }
 }
 main {
   color: #2f2e41;
+  margin-left: 1.5rem;
+  @media screen and (max-width: 1000px) {
+    margin: 0;
+  }
   a {
     color: #ff6347;
   }
   .red {
     color: #ff6347;
+  }
+}
+
+hr {
+  border: 0.5px solid #ff6347;
+  margin: 3rem auto;
+  max-width: 900px;
+  @media screen and (max-width: 1200px) {
+    max-width: 500px;
   }
 }
 </style>
