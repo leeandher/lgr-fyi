@@ -18,13 +18,19 @@
         <button type="submit">Submit</button>
       </fieldset>
     </form>
+    <History />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import History from "./History.vue";
 
-@Component
+@Component({
+  components: {
+    History
+  }
+})
 class Linker extends Vue {}
 
 export default Linker;
@@ -32,9 +38,9 @@ export default Linker;
 
 <style scoped lang="scss">
 #app {
-  height: 500px;
   max-width: 800px;
   padding: 1.5rem;
+  padding-bottom: 4rem;
   position: relative;
   background: #fff0ed;
   border-radius: 10px;

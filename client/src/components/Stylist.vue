@@ -97,12 +97,16 @@ hr {
 :invalid {
   box-shadow: none;
 }
-
 :-moz-submit-invalid {
   box-shadow: none;
 }
-
 :-moz-ui-invalid {
   box-shadow: none;
+}
+::selection {
+  background: #fff0ed; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #fff0ed; /* Gecko Browsers */
 }
 </style>
