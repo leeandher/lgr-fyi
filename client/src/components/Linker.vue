@@ -1,8 +1,22 @@
 <template>
   <div id="app">
     <form action="post">
-      <input type="text" />
-      <input type="text" />
+      <fieldset>
+        <label for="origin">
+          <span>Original Link</span>
+          <input
+            type="text"
+            placeholder="https://www.example.com/really_long_super_link_thats_inconvenient"
+            name="origin"
+            required
+          />
+        </label>
+        <label for="suffix">
+          <span>Custom Suffix</span>
+          <input type="text" placeholder="small-boi" name="suffix" required />
+        </label>
+        <button type="submit">Submit</button>
+      </fieldset>
     </form>
   </div>
 </template>
@@ -19,10 +33,10 @@ export default Linker;
 <style scoped lang="scss">
 #app {
   height: 500px;
+  max-width: 800px;
   padding: 1.5rem;
   position: relative;
   background: #fff0ed;
-  border: 2px solid #ff6347;
   border-radius: 10px;
   margin-top: 2rem;
   margin-bottom: 3rem;
@@ -38,21 +52,64 @@ export default Linker;
     height: 90%;
     width: 90%;
     z-index: 0;
-    opacity: 0.75;
+    opacity: 0.35;
   }
 }
-
-input {
+fieldset {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  border: 0;
+  width: auto;
+}
+label {
+  display: block;
+  text-align: left;
   width: 80%;
-  margin: 2rem;
-  padding: 1.5rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  span {
+    display: block;
+    font-weight: bold;
+    color: #ff6347;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+}
+input {
+  font-family: inherit;
+  width: 100%;
+  padding: 1rem;
   z-index: 2;
   position: relative;
   font-size: 1.6rem;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   border: 2px solid #ff6347;
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+  border-radius: 5px;
   &:focus {
     background: white;
+    outline: 0;
+    box-shadow: 0 0 2px #ff6347;
+  }
+}
+button {
+  border: 2px solid #ff6347;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #ff6347;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-radius: 5px;
+  z-index: 2;
+  cursor: pointer;
+  &:focus {
     outline: 0;
     box-shadow: 0 0 2px #ff6347;
   }

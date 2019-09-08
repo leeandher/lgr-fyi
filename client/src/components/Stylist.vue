@@ -18,7 +18,7 @@ export default Stylist;
 html {
   background: #2f2e41;
   font-size: 10px;
-  font-family: "Merriweather", Helvetica, Arial, sans-serif;
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -55,6 +55,8 @@ body:after {
 }
 body:before {
   content: "";
+  /* ASK JORDINE */
+  /* position: fixed  A*/
   position: absolute;
   z-index: -1;
   left: -2rem;
@@ -91,5 +93,16 @@ hr {
   @media screen and (max-width: 1200px) {
     max-width: 500px;
   }
+}
+:invalid {
+  box-shadow: none;
+}
+
+:-moz-submit-invalid {
+  box-shadow: none;
+}
+
+:-moz-ui-invalid {
+  box-shadow: none;
 }
 </style>

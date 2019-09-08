@@ -4,7 +4,7 @@ Welcome to [lgr.fyi](www.lgr.fyi)! It's a simple, open-source, URL Shortener tha
 
 ## Using the app
 
-You've definitely used a URL shortener before so I really don't think I need to explain it to you but I'll do it anyway. You just add any link you want to the input field and the app will spit out a nice, short `lgr.fyi` link that will redirect to your linked resource. It makes sure links are unique, and even lets you add a custom suffix to your link if you prefer that. Any of your immediate links will be stored in your local storage, but <s>if you want to permanently keep track of your links, sign up and view them all that way</s> more is coming soon!
+You've definitely used a URL shortener before so I really don't think I need to explain it to you but I'll do it anyway. You just add any link you want to the input field and the app will spit out a nice, short `lgr.fyi` link that will redirect to your linked resource. It makes sure links are unique, and even lets you add a custom suffix to your link if you prefer that. Any of your immediate links will be stored in your local storage, to keep them nice and accessible!
 
 ## How it works
 
