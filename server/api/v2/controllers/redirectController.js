@@ -20,5 +20,6 @@ exports.increaseClicks = async (req, res, next) => {
 exports.performRedirect = async (req, res, next) => {
   const { link } = req
   console.log(`Redirecting via '${link.suffix}', done ${link.clicks} time(s)`)
-  res.localt(link.origin)
+  if (link.origin.startsWith('http')) return res.redirect(link.origin)
+  return res.redirect(`https://${link.origin}`)
 }

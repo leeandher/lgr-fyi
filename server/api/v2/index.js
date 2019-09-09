@@ -8,8 +8,10 @@ const redirectController = require('./controllers/redirectController')
 router.get('/', (req, res) => res.send('booty hole'))
 router.post(
   '/v2',
+  linkController.validateForm,
   linkController.validateLink,
   linkController.preventNesting,
+  linkController.verifySuffix,
   linkController.returnExistingLink,
   linkController.createShortLink,
 )
