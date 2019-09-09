@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const ShortUniqueId = require('short-unique-id')
+const err = require('../errorMessages')
 
 const Link = mongoose.model('Link')
 
@@ -9,43 +10,43 @@ const isSiteRegex = /lgr\.fyi\/.{5}/i
 // Validate the types received
 exports.validateForm = (req, res, next) => {
   const { origin, suffix } = req.body
-  if (typeof origin !== 'string')
-    return res.status(400).json({
-      message: "That isn't a valid type of original link, Please try again.",
-    })
-  if (typeof origin !== 'string')
-    return res.status(400).json({
-      message: "That isn't a valid type of original link, Please try again.",
-    })
+  if (typeof origin !== 'string') {
+    return res.status(400).json(err.invalidOriginType)
+  }
+  if (suffix && typeof suffix !== 'string') {
+    return res.status(400).json(err.invalidSuffixType)
+  }
+  return next()
 }
 
 // Make sure the link is valid
 exports.validateLink = (req, res, next) => {
   const { origin } = req.body
-  if (!origin)
-    return res.status(400).json({
-      message:
-        "That isn't a valid link, try adding 'https://' or 'www.' to the beginning of your link",
-    })
+  if (!origin) return res.status(400).json(err.noOrigin)
   if (isLinkRegex.test(origin)) return next()
-  res.status(400).json({
-    message:
-      "That isn't a valid link - try adding 'https://' or 'www.' to the beginning of your link",
-  })
+  res.status(400).json(err.noLinkMatch)
 }
 
 // Ensure they don't shorten a shortened link
 exports.preventNesting = (req, res, next) => {
   const { origin } = req.body
   if (!isSiteRegex.test(origin)) return next()
-  res.status(400).json({
-    message: "That isn't a valid link - you can't shorten links from this site",
-  })
+  res.status(400).json(err.siteMatch)
+}
+
+// Ensure custom suffix doesn't clash
+exports.verifySuffix = async (req, res, next) => {
+  const { suffix } = req.body
+  if (!suffix) return next()
+  const existingSuffix = await Link.findOne({ suffix })
+  if (existingSuffix) return res.status(400).json(err.suffixTaken)
+  return next()
 }
 
 // If there is an existing link, return that instead
 exports.returnExistingLink = async (req, res, next) => {
-  const { origin } = req.body
+  const { origin, suffix } = req.body
+  if (suffix) return next()
   const existingLink = await Link.findOne({ origin })
   return existingLink ? res.json(existingLink) : next()
 }
@@ -54,7 +55,7 @@ exports.returnExistingLink = async (req, res, next) => {
 exports.createShortLink = async (req, res) => {
   const { origin } = req.body
   const uid = new ShortUniqueId()
-  const suffix = uid.randomUUID(5)
+  const suffix = req.body.suffix || uid.randomUUID(5)
   const link = await new Link({ origin, suffix }).save()
   return res.json(link)
 }
