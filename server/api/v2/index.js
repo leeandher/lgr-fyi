@@ -7,11 +7,12 @@ const linkController = require('./controllers/linkController')
 
 router.get('/', ((req,res) => res.send('booty hole')))
 router.post(
-  '/api/v2',
-  linkController.validateUrl,
+  '/v2',
+  linkController.validateLink,
   linkController.preventNesting,
-  // linkController.createShortLink
+  linkController.returnExistingLink,
+  linkController.createShortLink
 )
-// router.get('/:suffix', redirectController.performRedirect)
+router.get('/:suffix', redirectController.performRedirect)
 
 module.exports = router
