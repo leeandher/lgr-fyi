@@ -7,9 +7,9 @@ const linkController = require('./controllers/linkController')
 
 router.get('/', ((req,res) => res.send('booty hole')))
 router.post(
-  '/api',
+  '/api/v2',
   linkController.validateUrl,
-  // linkController.preventNesting,
+  linkController.preventNesting,
   // linkController.createShortLink
 )
 // router.get('/:suffix', redirectController.performRedirect)

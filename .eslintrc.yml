@@ -19,7 +19,7 @@ rules:
     - 2
   comma-dangle:
     - error
-    - always
+    - 'only-multiline'
   linebreak-style:
     - error
     - windows
@@ -29,3 +29,6 @@ rules:
   semi:
     - error
     - never
+  object-curly-spacing:
+    - error
+    - always
