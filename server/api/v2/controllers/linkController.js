@@ -3,29 +3,51 @@ const ShortUniqueId = require('short-unique-id')
 
 const Link = mongoose.model('Link')
 
-const isLinkRegex = /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w\-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\\w]*))?)/g
-const isSiteRegex = /lgr\.fyi\/.{5}/gi
+const isLinkRegex = /^((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www\.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w\-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[.!/\\\w]*))?)/
+const isSiteRegex = /lgr\.fyi\/.{5}/i
+
+// Validate the types received
+exports.validateForm = (req, res, next) => {
+  const { origin, suffix } = req.body
+  if (typeof origin !== 'string')
+    return res.status(400).json({
+      message: "That isn't a valid type of original link, Please try again.",
+    })
+  if (typeof origin !== 'string')
+    return res.status(400).json({
+      message: "That isn't a valid type of original link, Please try again.",
+    })
+}
 
 // Make sure the link is valid
 exports.validateLink = (req, res, next) => {
-  const { origin } = req.body 
-  if (!origin) return  res.status(400).send({ message: 'That isn\'t a valid link, try adding \'https://\' or \'www.\' to the beginning of your link' })
+  const { origin } = req.body
+  if (!origin)
+    return res.status(400).json({
+      message:
+        "That isn't a valid link, try adding 'https://' or 'www.' to the beginning of your link",
+    })
   if (isLinkRegex.test(origin)) return next()
-  res.status(400).send({ message: 'That isn\'t a valid link - try adding \'https://\' or \'www.\' to the beginning of your link' })
+  res.status(400).json({
+    message:
+      "That isn't a valid link - try adding 'https://' or 'www.' to the beginning of your link",
+  })
 }
 
 // Ensure they don't shorten a shortened link
 exports.preventNesting = (req, res, next) => {
   const { origin } = req.body
   if (!isSiteRegex.test(origin)) return next()
-  res.status(400).send({ message: 'That isn\'t a valid link - you can\'t shorten links from this site' })
+  res.status(400).json({
+    message: "That isn't a valid link - you can't shorten links from this site",
+  })
 }
 
 // If there is an existing link, return that instead
-exports.returnExistingLink = async(req, res, next) => {
+exports.returnExistingLink = async (req, res, next) => {
   const { origin } = req.body
   const existingLink = await Link.findOne({ origin })
-  return existingLink ? res.json(existingLink): next()
+  return existingLink ? res.json(existingLink) : next()
 }
 
 // If not, create a link to return

@@ -12,9 +12,12 @@ mongoose.connect(process.env.DATABASE_URI, {
   reconnectInterval: 1000,
   useNewUrlParser: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 })
 mongoose.Promise = global.Promise
-mongoose.connection.on('error', err => console.error(`Error on DB Connection → ${err.message}`))
+mongoose.connection.on('error', err =>
+  console.error(`Error on DB Connection → ${err.message}`),
+)
 
 // Import the models
 require('./models/Link')
