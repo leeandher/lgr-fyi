@@ -7,7 +7,6 @@ const linkSchema = new mongoose.Schema({
     type: String,
     lowercase: true,
     trim: true,
-    unique: true,
     required: true,
   },
   clicks: {
@@ -36,7 +35,7 @@ const linkSchema = new mongoose.Schema({
 
 // Create the virtual 'shortLink' field
 linkSchema.virtual('shortLink').get(function() {
-  return `${process.env.BASE_URL}/${this.suffix}`
+  return `${process.env.CLIENT_URL}/${this.suffix}`
 })
 
 // Define the indexes

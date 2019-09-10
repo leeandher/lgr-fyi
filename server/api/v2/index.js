@@ -1,23 +1,23 @@
 const express = require('express')
-
 const router = express.Router()
 
 const linkController = require('./controllers/linkController')
 const redirectController = require('./controllers/redirectController')
+const { catchErrors } = require('../../handlers/errorHandlers')
 
-router.get('/', (req, res) => res.send('booty hole'))
 router.post(
-  '/v2',
+  '/api',
   linkController.validateForm,
   linkController.validateLink,
   linkController.preventNesting,
-  linkController.verifySuffix,
-  linkController.returnExistingLink,
-  linkController.createShortLink,
+  catchErrors(linkController.verifySuffix),
+  catchErrors(linkController.returnExistingLink),
+  catchErrors(linkController.createShortLink),
 )
+router.get('/api/data', catchErrors(linkController.getLinkData))
 router.get(
   '/:suffix',
-  redirectController.increaseClicks,
+  catchErrors(redirectController.increaseClicks),
   redirectController.performRedirect,
 )
 

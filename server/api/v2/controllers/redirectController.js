@@ -9,6 +9,11 @@ const Link = mongoose.model('Link')
 
 //   res.json({ link: returnLink.originalUrl, count: returnLink.clickCount })
 // }
+
+exports.sendHome = async (req, res, next) => {
+  return res.redirect(process.env.CLIENT_URL)
+}
+
 exports.increaseClicks = async (req, res, next) => {
   const { suffix } = req.params
   const link = await Link.findOneAndUpdate({ suffix }, { $inc: { clicks: 1 } })

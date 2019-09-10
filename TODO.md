@@ -1,4 +1,5 @@
 **Newer TODOs**
+
 - [x] reconfigure local development
 - [x] implement vue instead of React for the frontend
 - [ ] figure out how routing is going to look
@@ -8,6 +9,7 @@
 - [ ] add feature to add a custom suffix to your link
 
 **Older TODOs**
+
 - [x] make sure links stay in order
 - [ ] create errorHandlers for async requests
 - [ ] learn about service workers

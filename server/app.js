@@ -29,8 +29,10 @@ app.use(
   }),
 )
 
+// Implement the API!
 app.use('/', api)
 
+//
 // If that above routes didnt work, we 404 them and forward to error handler
 // app.use(errorHandlers.notFound)
 

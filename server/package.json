@@ -4,8 +4,8 @@
   "description": "Express server for a custom URL shortener",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=\"development\" && nodemon start.js",
-    "start": "SET NODE_ENV=\"production\" && nodemon start.js"
+    "dev": "SET NODE_ENV=development&&nodemon start.js",
+    "start": "SET NODE_ENV=production&&nodemon start.js"
   },
   "author": "Leander Rodrigues",
   "license": "MIT",
