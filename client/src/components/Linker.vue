@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <form action="post">
+    <form @submit.prevent.stop="onSubmit">
       <fieldset>
         <label for="origin">
           <span>Original Link</span>
@@ -9,11 +9,12 @@
             placeholder="https://www.example.com/really_long_super_link_thats_inconvenient"
             name="origin"
             required
+            v-model="origin"
           />
         </label>
         <label for="suffix">
           <span>Custom Suffix</span>
-          <input type="text" placeholder="small-boi" name="suffix" required />
+          <input type="text" placeholder="small-boi" name="suffix" required v-model="suffix" />
         </label>
         <button type="submit">Submit</button>
       </fieldset>
@@ -29,9 +30,22 @@ import History from "./History.vue";
 @Component({
   components: {
     History
-  }
+  },
+  data: () => ({
+    origin: "www.reddit.com",
+    suffix: "reddit1"
+  })
 })
-class Linker extends Vue {}
+class Linker extends Vue {
+  private async onSubmit(): Promise<void> {
+    const { origin, suffix } = this.$data;
+    const body: string = JSON.stringify({ origin, suffix });
+    const data = await fetch("http://localhost:7777/api", {
+      method: "POST",
+      body
+    });
+  }
+}
 
 export default Linker;
 </script>
