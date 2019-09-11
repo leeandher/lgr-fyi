@@ -12,22 +12,26 @@
             v-model="origin"
           />
         </label>
-        <p class="alert">TESTING</p>
+        <p class="alert" v-if="error.type === 'origin'">{{error.message}}</p>
         <label for="suffix">
           <span>Custom Suffix</span>
           <input type="text" placeholder="small-boi" name="suffix" required v-model="suffix" />
         </label>
         <button type="submit">Submit</button>
-        <p class="alert">TESTING</p>
+        <p class="alert" v-if="error.type === 'suffix'">{{error.message}}</p>
       </fieldset>
     </form>
-    <History />
+    <template v-if="history.length">
+      <span>{{history[0].origin}}</span>
+      <History :links="history" />
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import History from "./History.vue";
+const SUPER_MEGA_SECRET_ULTRA_KEY = "superMegaUltraSecretHyperSecretMegaLinks";
 
 interface ILink {
   origin: string;
@@ -42,9 +46,16 @@ interface ILink {
   data: () => ({
     origin: "www.reddit.com",
     suffix: "reddit1",
+    history: [],
     loading: false,
-    history: []
-  })
+    error: {
+      message: "",
+      type: ""
+    }
+  }),
+  created: function() {
+    this.$data.history = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
+  }
 })
 class Linker extends Vue {
   private async onSubmit(): Promise<void> {
@@ -60,12 +71,23 @@ class Linker extends Vue {
       body
     });
     const data = await res.json();
-    console.log(data);
-    if (data.message) return console.error(data.message);
     // if message, do some kind of notification that the request bombed containing the messsage
-    this.loadIntoHistory(data);
+    if (data.message) return console.error(data.message);
+    return this.loadIntoHistory({
+      origin: data.origin,
+      suffix: data.suffix,
+      clicks: data.clicks
+    });
   }
-  private loadIntoHistory(data: ILink): void {}
+  private loadIntoHistory(link: ILink): void {
+    const newHistory = this.$data.history;
+    newHistory.unshift(link);
+
+    return localStorage.setItem(
+      SUPER_MEGA_SECRET_ULTRA_KEY,
+      JSON.stringify(this.$data.history)
+    );
+  }
 }
 
 export default Linker;
