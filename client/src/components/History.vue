@@ -7,7 +7,7 @@
       <p class="header">Clicks</p>
     </div>
     <template v-for="link in links">
-      <HistoryLink :key="link.suffix" link="link" />
+      <HistoryLink :key="link.suffix" :link="link" />
     </template>
   </div>
 </template>
@@ -37,6 +37,7 @@ export default History;
   background: rgba(255, 255, 255, 0.925);
   border: 2px solid #ff6347;
   border-radius: 5px;
+  margin-top: 4rem;
 }
 .header-row {
   display: grid;
@@ -47,7 +48,8 @@ export default History;
   font-weight: bold;
   text-transform: uppercase;
   color: #ff6347;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Helvetica, "Trebuchet MS",
+    sans-serif;
   margin: 0;
   border: 1px solid #ff6347;
   border-width: 0 1px 1px 0;

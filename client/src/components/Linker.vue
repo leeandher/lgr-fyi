@@ -11,18 +11,17 @@
             required
             v-model="origin"
           />
+          <p class="alert" v-if="error.type === 'ORIGIN'">{{error.message}}</p>
         </label>
-        <p class="alert" v-if="error.type === 'origin'">{{error.message}}</p>
         <label for="suffix">
           <span>Custom Suffix</span>
-          <input type="text" placeholder="small-boi" name="suffix" required v-model="suffix" />
+          <input type="text" placeholder="small-boi" name="suffix" v-model="suffix" />
+          <p class="alert" v-if="error.type === 'SUFFIX'">{{error.message}}</p>
         </label>
         <button type="submit">Submit</button>
-        <p class="alert" v-if="error.type === 'suffix'">{{error.message}}</p>
       </fieldset>
     </form>
     <template v-if="history.length">
-      <span>{{history[0].origin}}</span>
       <History :links="history" />
     </template>
   </div>
@@ -37,6 +36,11 @@ export interface ILink {
   origin: string;
   suffix: string;
   clicks: number;
+}
+
+export interface IError {
+  message: string;
+  type: string;
 }
 
 @Component({
@@ -61,9 +65,7 @@ export interface ILink {
 class Linker extends Vue {
   private async onSubmit(): Promise<void> {
     this.$data.loading = true;
-    window.setTimeout(() => {
-      this.$data.loading = false;
-    }, 1000);
+    this.clearError();
     const { origin, suffix } = this.$data;
     const body: string = JSON.stringify({ origin, suffix });
     const res = await fetch("http://localhost:7777/api", {
@@ -72,29 +74,31 @@ class Linker extends Vue {
       body
     });
     const data = await res.json();
-    // if message, do some kind of notification that the request bombed containing the messsage
-    if (data.message) {
-      this.$data.error = {
-        message: data.message,
-        type: data.type
-      };
-      return;
-    }
-
-    return this.loadIntoHistory({
+    this.$data.loading = false;
+    return data.error ? this.displayError(data) : this.loadIntoHistory(data);
+  }
+  private loadIntoHistory(data: ILink): void {
+    const link = {
       origin: data.origin,
       suffix: data.suffix,
       clicks: data.clicks
-    });
-  }
-  private loadIntoHistory(link: ILink): void {
+    };
     const newHistory = this.$data.history;
     newHistory.unshift(link);
-
-    return localStorage.setItem(
+    localStorage.setItem(
       SUPER_MEGA_SECRET_ULTRA_KEY,
       JSON.stringify(this.$data.history)
     );
+  }
+  private displayError(data: IError): void {
+    const error = {
+      message: data.message,
+      type: data.type
+    };
+    this.$data.error = error;
+  }
+  private clearError(): void {
+    this.$data.error = {};
   }
 }
 
@@ -137,17 +141,16 @@ fieldset {
   }
 }
 label {
+  position: relative;
   display: block;
   text-align: left;
   width: 80%;
-  margin: 0 auto;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin: 2rem auto;
   span {
     display: block;
     font-weight: bold;
     color: #ff6347;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+    font-family: "Gill Sans", "Gill Sans MT", Helvetica, "Trebuchet MS",
       sans-serif;
     font-size: 1.2rem;
     text-transform: uppercase;
@@ -164,6 +167,7 @@ input {
   border: 2px solid #ff6347;
   font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
   border-radius: 5px;
+  margin-bottom: 2rem;
   &:focus {
     background: white;
     outline: 0;
@@ -172,7 +176,8 @@ input {
 }
 button {
   border: 2px solid #ff6347;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Helvetica, "Trebuchet MS",
+    sans-serif;
   text-transform: uppercase;
   position: relative;
   font-weight: bold;
@@ -194,5 +199,21 @@ button {
   &::-moz-focus-inner {
     border: 0;
   }
+}
+
+.alert {
+  position: absolute;
+  top: calc(100% - 3.5rem);
+  z-index: 1;
+  background: #575988;
+  padding: 0.5rem;
+  font-weight: 400;
+  font-size: 1.3rem;
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+  color: #fff;
+  left: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Helvetica, "Trebuchet MS",
+    sans-serif;
 }
 </style>

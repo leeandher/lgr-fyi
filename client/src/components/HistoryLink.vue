@@ -1,8 +1,8 @@
 <template>
   <div class="item-row">
     <button class="copy item">🔗</button>
-    <p class="suffix item">https://www.lgr.fyi/{{link.suffix}}</p>
-    <p class="origin item">{{link.count}}</p>
+    <a class="suffix item" :href="shortLink">{{shortLinkText}}</a>
+    <p class="origin item">{{link.origin}}</p>
     <p class="clicks item">{{link.clicks}}</p>
   </div>
 </template>
@@ -14,6 +14,12 @@ import { ILink } from "./Linker.vue";
 class HistoryLink extends Vue {
   @Prop()
   link: ILink;
+  data() {
+    return {
+      shortLink: `https://www.lgr.fyi/${this.$props.link.suffix}`,
+      shortLinkText: `lgr.fyi/${this.$props.link.suffix}`
+    };
+  }
 }
 
 export default HistoryLink;
