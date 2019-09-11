@@ -14,7 +14,6 @@ router.post(
   catchErrors(linkController.returnExistingLink),
   catchErrors(linkController.createShortLink),
 )
-router.get('/api/data', catchErrors(linkController.getLinkData))
 router.get(
   '/:suffix',
   catchErrors(redirectController.increaseClicks),

@@ -59,14 +59,3 @@ exports.createShortLink = async (req, res) => {
   const link = await new Link({ origin, suffix }).save()
   return res.json(link)
 }
-
-// Get the data about the link
-exports.getLinkData = async (req, res) => {
-  const { suffixes } = req.body
-  const linkData = {}
-  suffixes.forEach(async suffix => {
-    const link = await Link.findOne({ suffix })
-    linkData[suffix] = link
-  })
-  return res.json(linkData)
-}
