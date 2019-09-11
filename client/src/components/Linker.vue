@@ -129,9 +129,16 @@ button {
   border-radius: 5px;
   z-index: 2;
   cursor: pointer;
+  &:hover,
   &:focus {
+    background: #fff0ed;
+  }
+  &:active {
     outline: 0;
     box-shadow: 0 0 2px #ff6347;
+  }
+  &::-moz-focus-inner {
+    border: 0;
   }
 }
 </style>

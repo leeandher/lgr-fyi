@@ -9,6 +9,10 @@
     <p class="short item">https://www.lgr.fyi/abcde</p>
     <p class="origin item">https://www.example.com/really_long_super_link_thats_inconvenient</p>
     <p class="clicks item">8</p>
+    <button class="copy item">🔗</button>
+    <p class="short item">https://www.lgr.fyi/abcde</p>
+    <p class="origin item">https://www.example.com/really_long_super_link_thats_inconvenient</p>
+    <p class="clicks item">8</p>
   </div>
 </template>
 
@@ -36,6 +40,22 @@ button {
   background: inherit;
   border: 0;
   cursor: pointer;
+  height: 100%;
+  outline: 0;
+  &:nth-last-child(4) {
+    border-bottom-left-radius: 3px;
+  }
+  &:hover,
+  &:focus {
+    background: #fff0ed;
+  }
+  &:active {
+    background: #ff6347;
+    color: #ff6347;
+  }
+  &::-moz-focus-inner {
+    border: 0;
+  }
 }
 .header {
   display: block;
