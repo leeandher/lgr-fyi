@@ -8,7 +8,7 @@
       <p class="header">Delete</p>
     </div>
     <template v-for="link in links">
-      <HistoryLink :key="link._id" :link="link" />
+      <HistoryLink :key="link._id" :link="link" :refresh="refresh" />
     </template>
   </div>
 </template>
@@ -26,6 +26,8 @@ import { ILink } from "../utils";
 class History extends Vue {
   @Prop()
   links: ILink[];
+  @Prop()
+  refresh: Function;
 }
 
 export default History;

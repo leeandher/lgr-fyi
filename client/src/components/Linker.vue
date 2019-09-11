@@ -22,7 +22,7 @@
       </fieldset>
     </form>
     <template v-if="history.length">
-      <History :links="history" />
+      <History :links="history" :refresh="loadHistory" />
     </template>
   </div>
 </template>
@@ -47,11 +47,14 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink, IError } from "../utils";
     }
   }),
   created: function() {
-    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
-    this.$data.history = JSON.parse(oldHistory);
+    this.loadHistory();
   }
 })
 class Linker extends Vue {
+  public loadHistory() {
+    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
+    this.$data.history = JSON.parse(oldHistory) || [];
+  }
   private async onSubmit(): Promise<void> {
     this.$data.loading = true;
     this.clearError();
@@ -68,7 +71,7 @@ class Linker extends Vue {
   }
   private loadIntoHistory(data: ILink): void {
     const link = {
-      id: data._id,
+      _id: data._id,
       origin: data.origin,
       suffix: data.suffix,
       clicks: data.clicks

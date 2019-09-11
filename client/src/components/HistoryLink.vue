@@ -4,7 +4,7 @@
     <a class="suffix item" :href="shortLink">{{shortLinkText}}</a>
     <p class="origin item">{{link.origin}}</p>
     <p class="clicks item">{{link.clicks}}</p>
-    <button class="delete item" @click="deleteItem(origin.suffix)">❌</button>
+    <button class="delete item" @click="deleteItem(link._id)">❌</button>
   </div>
 </template>
 
@@ -15,15 +15,24 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink } from "../utils";
 class HistoryLink extends Vue {
   @Prop()
   link: ILink;
+  @Prop()
+  refresh: Function;
   data() {
     return {
       shortLink: `https://www.lgr.fyi/${this.$props.link.suffix}`,
       shortLinkText: `lgr.fyi/${this.$props.link.suffix}`
     };
   }
-  private deleteItem(suffix: string): void {
-    const data = JSON.parse(localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY));
-    console.log(data);
+  private deleteItem(id: string): void {
+    const oldHistory = JSON.parse(
+      localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY)
+    );
+    const newHistory = oldHistory.filter(({ _id }) => id !== _id);
+    localStorage.setItem(
+      SUPER_MEGA_SECRET_ULTRA_KEY,
+      JSON.stringify(newHistory)
+    );
+    this.$props.refresh();
   }
 }
 
