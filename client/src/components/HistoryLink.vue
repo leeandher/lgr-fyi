@@ -4,12 +4,13 @@
     <a class="suffix item" :href="shortLink">{{shortLinkText}}</a>
     <p class="origin item">{{link.origin}}</p>
     <p class="clicks item">{{link.clicks}}</p>
+    <button class="delete item" @click="deleteItem(origin.suffix)">❌</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ILink } from "./Linker.vue";
+import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink } from "../utils";
 @Component
 class HistoryLink extends Vue {
   @Prop()
@@ -19,6 +20,10 @@ class HistoryLink extends Vue {
       shortLink: `https://www.lgr.fyi/${this.$props.link.suffix}`,
       shortLinkText: `lgr.fyi/${this.$props.link.suffix}`
     };
+  }
+  private deleteItem(suffix: string): void {
+    const data = JSON.parse(localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY));
+    console.log(data);
   }
 }
 
@@ -49,7 +54,7 @@ button {
 }
 .item-row {
   display: grid;
-  grid-template-columns: 1fr 5fr 10fr 3fr;
+  grid-template-columns: 75px 5fr 10fr 3fr 75px;
 }
 .item {
   font-size: 1.2rem;

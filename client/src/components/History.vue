@@ -5,9 +5,10 @@
       <p class="header">Short Link</p>
       <p class="header">Original Link</p>
       <p class="header">Clicks</p>
+      <p class="header">Delete</p>
     </div>
     <template v-for="link in links">
-      <HistoryLink :key="link.suffix" :link="link" />
+      <HistoryLink :key="link._id" :link="link" />
     </template>
   </div>
 </template>
@@ -15,7 +16,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import HistoryLink from "./HistoryLink.vue";
-import { ILink } from "./Linker.vue";
+import { ILink } from "../utils";
 
 @Component({
   components: {
@@ -41,7 +42,7 @@ export default History;
 }
 .header-row {
   display: grid;
-  grid-template-columns: 1fr 5fr 10fr 3fr;
+  grid-template-columns: 75px 5fr 10fr 3fr 75px;
 }
 .header {
   display: block;
@@ -57,7 +58,7 @@ export default History;
   padding: 1rem;
   margin: 0;
   align-self: center;
-  &:nth-child(4) {
+  &:nth-child(5) {
     border-right-width: 0px;
   }
 }

@@ -30,18 +30,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import History from "./History.vue";
-const SUPER_MEGA_SECRET_ULTRA_KEY = "superMegaUltraSecretHyperSecretMegaLinks";
-
-export interface ILink {
-  origin: string;
-  suffix: string;
-  clicks: number;
-}
-
-export interface IError {
-  message: string;
-  type: string;
-}
+import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink, IError } from "../utils";
 
 @Component({
   components: {
@@ -49,7 +38,7 @@ export interface IError {
   },
   data: () => ({
     origin: "www.reddit.com",
-    suffix: "reddit1",
+    suffix: "",
     history: [],
     loading: false,
     error: {
@@ -79,6 +68,7 @@ class Linker extends Vue {
   }
   private loadIntoHistory(data: ILink): void {
     const link = {
+      id: data._id,
       origin: data.origin,
       suffix: data.suffix,
       clicks: data.clicks
