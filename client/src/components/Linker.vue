@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <form @submit.prevent.stop="onSubmit">
-      <fieldset>
+      <fieldset :disabled="loading" :aria-busy="loading">
         <label for="origin">
           <span>Original Link</span>
           <input
@@ -12,11 +12,13 @@
             v-model="origin"
           />
         </label>
+        <p class="alert">TESTING</p>
         <label for="suffix">
           <span>Custom Suffix</span>
           <input type="text" placeholder="small-boi" name="suffix" required v-model="suffix" />
         </label>
         <button type="submit">Submit</button>
+        <p class="alert">TESTING</p>
       </fieldset>
     </form>
     <History />
@@ -27,24 +29,43 @@
 import { Component, Vue } from "vue-property-decorator";
 import History from "./History.vue";
 
+interface ILink {
+  origin: string;
+  suffix: string;
+  clicks: number;
+}
+
 @Component({
   components: {
     History
   },
   data: () => ({
     origin: "www.reddit.com",
-    suffix: "reddit1"
+    suffix: "reddit1",
+    loading: false,
+    history: []
   })
 })
 class Linker extends Vue {
   private async onSubmit(): Promise<void> {
+    this.$data.loading = true;
+    window.setTimeout(() => {
+      this.$data.loading = false;
+    }, 1000);
     const { origin, suffix } = this.$data;
     const body: string = JSON.stringify({ origin, suffix });
-    const data = await fetch("http://localhost:7777/api", {
+    const res = await fetch("http://localhost:7777/api", {
+      headers: { "Content-Type": "application/json" },
       method: "POST",
       body
     });
+    const data = await res.json();
+    console.log(data);
+    if (data.message) return console.error(data.message);
+    // if message, do some kind of notification that the request bombed containing the messsage
+    this.loadIntoHistory(data);
   }
+  private loadIntoHistory(data: ILink): void {}
 }
 
 export default Linker;
@@ -81,6 +102,9 @@ fieldset {
   padding: 0;
   border: 0;
   width: auto;
+  &[aria-busy="true"] {
+    /* Do some loading css */
+  }
 }
 label {
   display: block;

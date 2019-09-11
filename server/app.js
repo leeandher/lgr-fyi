@@ -3,15 +3,15 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 
-const path = require('path')
-const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 const api = require('./api/v2')
 
 const app = express()
 
-//Attach form data to req.body
+// Attach form data to req.body
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -28,6 +28,9 @@ app.use(
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }),
 )
+
+// Setup CORS
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
 // Implement the API!
 app.use('/', api)

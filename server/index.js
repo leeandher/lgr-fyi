@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 // Import the environment setup
-
 const path = `./settings.${
   process.env.NODE_ENV === 'development' ? 'dev' : 'prod'
 }.env`
