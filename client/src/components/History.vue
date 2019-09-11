@@ -1,26 +1,31 @@
 <template>
   <div class="history">
-    <p class="copy header item">Copy</p>
-    <p class="short header item">Short Link</p>
-    <p class="origin header item">Original Link</p>
-    <p class="clicks header item">Click Count</p>
-
-    <button class="copy item">🔗</button>
-    <p class="short item">https://www.lgr.fyi/abcde</p>
-    <p class="origin item">https://www.example.com/really_long_super_link_thats_inconvenient</p>
-    <p class="clicks item">8</p>
-    <button class="copy item">🔗</button>
-    <p class="short item">https://www.lgr.fyi/abcde</p>
-    <p class="origin item">https://www.example.com/really_long_super_link_thats_inconvenient</p>
-    <p class="clicks item">8</p>
+    <div class="header-row">
+      <p class="header">Copy</p>
+      <p class="header">Short Link</p>
+      <p class="header">Original Link</p>
+      <p class="header">Clicks</p>
+    </div>
+    <template v-for="link in links">
+      <HistoryLink :key="link.suffix" link="link" />
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import HistoryLink from "./HistoryLink.vue";
+import { ILink } from "./Linker.vue";
 
-@Component
-class History extends Vue {}
+@Component({
+  components: {
+    HistoryLink
+  }
+})
+class History extends Vue {
+  @Prop()
+  links: ILink[];
+}
 
 export default History;
 </script>
@@ -29,33 +34,13 @@ export default History;
 .history {
   position: relative;
   z-index: 2;
-  margin-top: 2.5rem;
   background: rgba(255, 255, 255, 0.925);
   border: 2px solid #ff6347;
   border-radius: 5px;
+}
+.header-row {
   display: grid;
   grid-template-columns: 1fr 5fr 10fr 3fr;
-}
-button {
-  background: inherit;
-  border: 0;
-  cursor: pointer;
-  height: 100%;
-  outline: 0;
-  &:nth-last-child(4) {
-    border-bottom-left-radius: 3px;
-  }
-  &:hover,
-  &:focus {
-    background: #fff0ed;
-  }
-  &:active {
-    background: #ff6347;
-    color: #ff6347;
-  }
-  &::-moz-focus-inner {
-    border: 0;
-  }
 }
 .header {
   display: block;
@@ -66,14 +51,12 @@ button {
   margin: 0;
   border: 1px solid #ff6347;
   border-width: 0 1px 1px 0;
-  &:nth-child(4) {
-    border-right-width: 0px;
-  }
-}
-.item {
   font-size: 1.2rem;
   padding: 1rem;
   margin: 0;
   align-self: center;
+  &:nth-child(4) {
+    border-right-width: 0px;
+  }
 }
 </style>

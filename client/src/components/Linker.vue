@@ -33,7 +33,7 @@ import { Component, Vue } from "vue-property-decorator";
 import History from "./History.vue";
 const SUPER_MEGA_SECRET_ULTRA_KEY = "superMegaUltraSecretHyperSecretMegaLinks";
 
-interface ILink {
+export interface ILink {
   origin: string;
   suffix: string;
   clicks: number;
@@ -54,7 +54,8 @@ interface ILink {
     }
   }),
   created: function() {
-    this.$data.history = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
+    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
+    this.$data.history = JSON.parse(oldHistory);
   }
 })
 class Linker extends Vue {
@@ -72,7 +73,14 @@ class Linker extends Vue {
     });
     const data = await res.json();
     // if message, do some kind of notification that the request bombed containing the messsage
-    if (data.message) return console.error(data.message);
+    if (data.message) {
+      this.$data.error = {
+        message: data.message,
+        type: data.type
+      };
+      return;
+    }
+
     return this.loadIntoHistory({
       origin: data.origin,
       suffix: data.suffix,
