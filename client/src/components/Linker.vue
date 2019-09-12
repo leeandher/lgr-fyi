@@ -6,7 +6,7 @@
           <span>Original Link</span>
           <input
             type="text"
-            placeholder="https://www.example.com/really_long_super_link_thats_inconvenient"
+            placeholder="e.g.   https://www.example.com/really_long_super_ugly_smelly_link"
             name="origin"
             required
             v-model="origin"
@@ -15,7 +15,12 @@
         </label>
         <label for="suffix">
           <span>Custom Suffix</span>
-          <input type="text" placeholder="small-boi" name="suffix" v-model="suffix" />
+          <input
+            type="text"
+            placeholder="e.g.   conf2019, my-wish-list-🎄🎁, whatever-you-like"
+            name="suffix"
+            v-model="suffix"
+          />
           <p class="alert" v-if="error.type === 'SUFFIX'">{{error.message}}</p>
         </label>
         <button type="submit">Submit</button>
@@ -38,7 +43,7 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
   },
   data() {
     return {
-      origin: "www.reddit.com",
+      origin: "",
       suffix: "",
       history: [],
       loading: false,
@@ -58,8 +63,11 @@ class Linker extends Vue {
     this.loadHistory();
   }
   private async onSubmit(): Promise<void> {
+    // Set the loading state and clear the error
     this.$data.loading = true;
     this.clearError();
+
+    // Submit the request
     const { origin, suffix } = this.$data;
     const body: string = JSON.stringify({ origin, suffix });
     const res = await fetch(API_URL, {
@@ -68,18 +76,30 @@ class Linker extends Vue {
       body
     });
     const data = await res.json();
+
+    // Update the loading state, and display the response
     this.$data.loading = false;
     return data.error ? this.displayError(data) : this.loadIntoHistory(data);
   }
   private loadIntoHistory(data: ILink): void {
+    // Extract the link
     const link = {
       _id: data._id,
       origin: data.origin,
       suffix: data.suffix,
       clicks: data.clicks
     };
-    const newHistory = this.$data.history;
-    newHistory.unshift(link);
+    const history = this.$data.history || [];
+
+    // Don't add it to history if its already there
+    const isLinkPresent = history.some(
+      ({ _id }: { _id: string }) => link._id === _id
+    );
+    if (isLinkPresent) return;
+
+    // Otherwise update history
+    history.unshift(link);
+    this.$data.history = history;
     localStorage.setItem(
       SUPER_MEGA_SECRET_ULTRA_KEY,
       JSON.stringify(this.$data.history)
