@@ -1,5 +1,7 @@
-export const SUPER_MEGA_SECRET_ULTRA_KEY =
+export const SUPER_MEGA_SECRET_ULTRA_KEY: string =
   "superMegaUltraSecretHyperSecretMegaLinks";
+
+export const API_URL: string = "http://localhost:7777/api";
 
 export interface ILink {
   _id: string;

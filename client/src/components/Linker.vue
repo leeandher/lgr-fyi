@@ -30,37 +30,39 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import History from "./History.vue";
-import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink, IError } from "../utils";
+import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
 
 @Component({
   components: {
     History
   },
-  data: () => ({
-    origin: "www.reddit.com",
-    suffix: "",
-    history: [],
-    loading: false,
-    error: {
-      message: "",
-      type: ""
-    }
-  }),
-  created: function() {
-    this.loadHistory();
+  data() {
+    return {
+      origin: "www.reddit.com",
+      suffix: "",
+      history: [],
+      loading: false,
+      error: {
+        message: "",
+        type: ""
+      }
+    };
   }
 })
 class Linker extends Vue {
-  public loadHistory() {
-    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY);
+  public loadHistory(): void {
+    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "";
     this.$data.history = JSON.parse(oldHistory) || [];
+  }
+  private created() {
+    this.loadHistory();
   }
   private async onSubmit(): Promise<void> {
     this.$data.loading = true;
     this.clearError();
     const { origin, suffix } = this.$data;
     const body: string = JSON.stringify({ origin, suffix });
-    const res = await fetch("http://localhost:7777/api", {
+    const res = await fetch(API_URL, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body
@@ -193,7 +195,6 @@ button {
     border: 0;
   }
 }
-
 .alert {
   position: absolute;
   top: calc(100% - 3.5rem);

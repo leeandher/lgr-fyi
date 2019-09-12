@@ -11,23 +11,24 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink } from "../utils";
-@Component
-class HistoryLink extends Vue {
-  @Prop()
-  link: ILink;
-  @Prop()
-  refresh: Function;
+@Component({
   data() {
     return {
       shortLink: `https://www.lgr.fyi/${this.$props.link.suffix}`,
       shortLinkText: `lgr.fyi/${this.$props.link.suffix}`
     };
   }
+})
+class HistoryLink extends Vue {
+  @Prop({ required: true }) public refresh!: () => void;
+  @Prop({ required: true }) private link!: ILink;
+
   private deleteItem(id: string): void {
-    const oldHistory = JSON.parse(
-      localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY)
+    const oldHistory =
+      JSON.parse(localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "") || [];
+    const newHistory = oldHistory.filter(
+      ({ _id }: { _id: string }) => id !== _id
     );
-    const newHistory = oldHistory.filter(({ _id }) => id !== _id);
     localStorage.setItem(
       SUPER_MEGA_SECRET_ULTRA_KEY,
       JSON.stringify(newHistory)
