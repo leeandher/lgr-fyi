@@ -2,7 +2,10 @@
 export const SUPER_MEGA_SECRET_ULTRA_KEY: string =
   "superMegaUltraSecretHyperSecretMegaLinks";
 
-export const API_URL: string = "http://localhost:7777/api";
+export const API_URL: string =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:7777/api"
+    : "https://www.lgr.fyi/api";
 
 // Interfaces
 export interface ILink {

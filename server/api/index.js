@@ -3,7 +3,7 @@ const router = express.Router()
 
 const linkController = require('./controllers/linkController')
 const redirectController = require('./controllers/redirectController')
-const { catchErrors } = require('../handlers/errorHandlers')
+const { catchErrors, healthCheck } = require('../handlers/errorHandlers')
 
 router.post(
   '/api',
@@ -19,5 +19,6 @@ router.get(
   catchErrors(redirectController.increaseClicks),
   redirectController.performRedirect,
 )
+router.get('/api/health-check', healthCheck)
 
 module.exports = router

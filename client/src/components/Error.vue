@@ -1,6 +1,7 @@
 <template>
   <div>
-    <img alt="Code monkey" src="../assets/404.svg" v-if="error === '404'" />
+    <img alt="Page not found" src="../assets/404.svg" v-if="error === '404'" />
+    <img alt="Something went wrong" src="../assets/bug_fix.svg" v-else />
     <p class="error">Error Code: {{error}}</p>
     <div v-if="suffix">
       <p>
