@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const path = require('path')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 
@@ -7,7 +8,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
-const api = require('./api/v2')
+const api = require('./api')
 
 const app = express()
 
@@ -32,7 +33,9 @@ app.use(
 // Setup CORS
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
-// Implement the API!
+// Serve the Vue App
+app.use('/', express.static(path.join(__dirname, '../client/dist')))
+// Implement the API
 app.use('/', api)
 
 //

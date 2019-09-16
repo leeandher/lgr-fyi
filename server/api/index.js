@@ -3,7 +3,7 @@ const router = express.Router()
 
 const linkController = require('./controllers/linkController')
 const redirectController = require('./controllers/redirectController')
-const { catchErrors } = require('../../handlers/errorHandlers')
+const { catchErrors } = require('../handlers/errorHandlers')
 
 router.post(
   '/api',
