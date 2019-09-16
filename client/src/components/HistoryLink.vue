@@ -1,16 +1,19 @@
 <template>
   <div class="item-row">
-    <button class="copy item">🔗</button>
-    <a class="suffix item" :href="shortLink">{{shortLinkText}}</a>
+    <button type="button" class="copy item" v-clipboard:copy="shortLinkText">🔗</button>
+    <p class="suffix item">
+      <a :href="shortLink">{{shortLinkText}}</a>
+    </p>
     <p class="origin item">{{link.origin}}</p>
     <p class="clicks item">{{link.clicks}}</p>
-    <button class="delete item" @click="deleteItem(link._id)">❌</button>
+    <button type="button" class="delete item" @click="deleteItem(link._id)">❌</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink } from "../utils";
+
 @Component({
   data() {
     return {
