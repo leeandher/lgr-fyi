@@ -2,9 +2,14 @@
   <div id="app">
     <Stylist>
       <Header />
-      <Linker />
-      <Description />
-      <Seller />
+      <div v-if="error">
+        <Error :error="error" :suffix="suffix" />
+      </div>
+      <div v-else>
+        <Linker />
+        <Description />
+        <Seller />
+      </div>
       <Footer />
     </Stylist>
   </div>
@@ -14,8 +19,9 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import Stylist from "./components/Stylist.vue";
-import Linker from "./components/Linker.vue";
 import Header from "./components/Header.vue";
+import Error from "./components/Error.vue";
+import Linker from "./components/Linker.vue";
 import Description from "./components/Description.vue";
 import Seller from "./components/Seller.vue";
 import Footer from "./components/Footer.vue";
@@ -24,10 +30,20 @@ import Footer from "./components/Footer.vue";
   components: {
     Stylist,
     Header,
+    Error,
     Linker,
     Description,
     Seller,
     Footer
+  },
+  data() {
+    const url = new URL(window.location.href);
+    const error = url.searchParams.get("error");
+    const suffix = url.searchParams.get("suffix");
+    return {
+      error,
+      suffix
+    };
   }
 })
 export default class App extends Vue {}

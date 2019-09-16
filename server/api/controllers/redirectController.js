@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const url = require('url')
 
 const Link = mongoose.model('Link')
 
@@ -11,7 +12,15 @@ exports.increaseClicks = async (req, res, next) => {
   const { suffix } = req.params
   const link = await Link.findOneAndUpdate({ suffix }, { $inc: { clicks: 1 } })
   if (!link) {
-    return res.redirect(`${process.env.CLIENT_URL}/404?suffix=${suffix}`)
+    return res.redirect(
+      url.format({
+        pathname: process.env.CLIENT_URL,
+        query: {
+          error: 404,
+          suffix,
+        },
+      }),
+    )
   }
   req.link = link
   return next()
