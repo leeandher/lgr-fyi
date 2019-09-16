@@ -35,20 +35,8 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
 // Serve the Vue App
 app.use('/', express.static(path.join(__dirname, '../client/dist')))
+
 // Implement the API
 app.use('/', api)
-
-//
-// If that above routes didnt work, we 404 them and forward to error handler
-// app.use(errorHandlers.notFound)
-
-// Otherwise this was a really bad error we didn't expect! Shoot eh
-// if (app.get("env") === "development") {
-//   /* Development Error Handler - Prints stack trace */
-//   app.use(errorHandlers.developmentErrors);
-// }
-
-// // production error handler
-// app.use(errorHandlers.productionErrors);
 
 module.exports = app

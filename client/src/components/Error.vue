@@ -2,11 +2,19 @@
   <div>
     <img alt="Code monkey" src="../assets/404.svg" v-if="error === '404'" />
     <p class="error">Error Code: {{error}}</p>
-    <p>
-      Sorry about that, but
-      <span class="red">/{{suffix}}</span> doesn't seem to exist.
-    </p>
-    <p>But feel free to create it!</p>
+    <div v-if="suffix">
+      <p>
+        Sorry about that, but
+        <span class="red">/{{suffix}}</span> doesn't seem to exist.
+      </p>
+      <p>But feel free to create it!</p>
+    </div>
+    <div v-else>
+      <p>Something went wrong, and it's definitely my fault.</p>
+      <p>
+        <small>(But if it's yours please own up to it so I don't feel as guilty)</small>
+      </p>
+    </div>
     <br />
     <p>
       <a href="/">
