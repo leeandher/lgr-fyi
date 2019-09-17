@@ -176,7 +176,7 @@ fieldset {
   border: 0;
   width: auto;
   &[aria-busy="true"] {
-    /* Do some loading css */
+    opacity: 0.5;
   }
 }
 label {
@@ -185,6 +185,7 @@ label {
   text-align: left;
   width: 80%;
   margin: 2rem auto;
+  z-index: 2;
   span {
     display: block;
     font-weight: bold;
