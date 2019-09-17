@@ -3,9 +3,7 @@
   "version": "2.0.0",
   "description": "A custom URL shortener, built with JavaScript",
   "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/leeandher/lgr-fyi.git"

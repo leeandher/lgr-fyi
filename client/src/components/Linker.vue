@@ -56,7 +56,7 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
 })
 class Linker extends Vue {
   public loadHistory(): void {
-    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "";
+    const oldHistory = localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "[]";
     this.$data.history = JSON.parse(oldHistory) || [];
   }
   private created() {
