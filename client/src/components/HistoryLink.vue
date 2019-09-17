@@ -68,7 +68,7 @@ button {
 }
 .item-row {
   display: grid;
-  grid-template-columns: 75px 5fr 10fr 3fr 75px;
+  grid-template-columns: 75px 150px 366px 100px 75px;
 }
 .item {
   font-size: 1.2rem;
