@@ -23,8 +23,7 @@
     </div>
     <div class="grid-item">
       <p class="right">
-        Take a trip,
-        <span class="red">get out of your comfort zone</span>, there's a whole world out there
+        <span class="red">Get out of your comfort zone</span>, there's a whole world out there
       </p>
       <img alt="Taking a trip" src="../assets/teleport.svg" />
     </div>
@@ -83,6 +82,7 @@ export default Seller;
     &.right {
       text-align: right;
     }
+    max-width: 75%;
     font-size: 1.65rem;
     @media screen and (max-width: 1000px) {
       font-size: 1.4rem;

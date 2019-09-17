@@ -27,8 +27,9 @@ class HistoryLink extends Vue {
   @Prop({ required: true }) private link!: ILink;
 
   private deleteItem(id: string): void {
-    const oldHistory =
-      JSON.parse(localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "") || [];
+    const oldHistory = JSON.parse(
+      localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "[]"
+    );
     const newHistory = oldHistory.filter(
       ({ _id }: { _id: string }) => id !== _id
     );

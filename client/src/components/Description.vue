@@ -5,12 +5,12 @@
         <span>Let's get real</span>
         <span class="red">.</span>
         It's
-        <em>2019</em>
+        <em>{{year}}</em>
       </span>
       <span class="red">.</span>
     </p>
     <p>
-      <span>Links shouldn't still be so long you gotta side scrolls</span>
+      <span>Links shouldn't be so long you gotta scroll sideways</span>
       <span class="red">.</span>
     </p>
     <p>
@@ -33,12 +33,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component
-class Description extends Vue {
-  private calculateYear() {
-    // const year: string = new Date.getFullYear();
+@Component({
+  data() {
+    return {
+      year: new Date().getFullYear()
+    };
   }
-}
+})
+class Description extends Vue {}
 
 export default Description;
 </script>

@@ -42,7 +42,7 @@ body:after {
   width: 80vw;
   background: white;
   transform: skew(-2deg);
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1050px) {
     transform: none;
     width: calc(100% - 50px);
     left: 25px;
@@ -55,16 +55,15 @@ body:after {
 }
 body:before {
   content: "";
-  /* ASK JORDINE */
-  /* position: fixed  A*/
   position: absolute;
   z-index: -1;
   left: -2rem;
   top: -2rem;
   width: 100vw;
-  height: 150vh;
+  height: 100vh;
+
   background: #ff6347;
-  transform: skew(45deg);
+  transform: skew(45deg) rotate(45deg);
   @media screen and (max-width: 1000px) {
     transform: skew(-45deg);
     width: 40vh;
