@@ -21,6 +21,8 @@ html {
   font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
 }
 *,
 *:before,
@@ -29,7 +31,9 @@ html {
 }
 body {
   font-size: 1.5rem;
-  padding: 2rem;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
   overflow-x: hidden;
 }
 body:after {
@@ -39,9 +43,9 @@ body:after {
   top: 0%;
   left: 10%;
   height: 100%;
-  width: 80vw;
-  background: white;
+  width: 80%;
   transform: skew(-2deg);
+  background: white;
   @media screen and (max-width: 1050px) {
     transform: none;
     width: calc(100% - 50px);
@@ -57,22 +61,19 @@ body:before {
   content: "";
   position: absolute;
   z-index: -1;
-  left: -2rem;
-  top: -2rem;
-  width: 100vw;
-  height: 100vh;
-
+  left: 30%;
+  width: 70%;
+  height: 100%;
   background: #ff6347;
-  transform: skew(45deg) rotate(45deg);
+  transform: skew(35deg);
   @media screen and (max-width: 1000px) {
-    transform: skew(-45deg);
-    width: 40vh;
-    top: -40%;
-    left: 50%;
+    transform: none;
+    left: 0;
   }
 }
 main {
   color: #2f2e41;
+  padding: 2rem;
   margin-left: 1.5rem;
   @media screen and (max-width: 1000px) {
     margin: 0;

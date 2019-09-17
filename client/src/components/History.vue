@@ -39,10 +39,12 @@ export default History;
   border: 2px solid #ff6347;
   border-radius: 5px;
   margin-top: 4rem;
+  overflow-x: auto;
 }
 .header-row {
   display: grid;
-  grid-template-columns: 75px 5fr 10fr 3fr 75px;
+  white-space: nowrap;
+  grid-template-columns: 75px 150px 366px 100px 75px;
 }
 .header {
   display: block;
