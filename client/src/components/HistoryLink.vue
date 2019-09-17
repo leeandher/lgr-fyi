@@ -12,13 +12,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { SUPER_MEGA_SECRET_ULTRA_KEY, ILink } from "../utils";
+import {
+  CLIENT_URL,
+  CLIENT_URL_SHORT,
+  SUPER_MEGA_SECRET_ULTRA_KEY,
+  ILink
+} from "../utils";
 
 @Component({
   data() {
     return {
-      shortLink: `https://www.lgr.fyi/${this.$props.link.suffix}`,
-      shortLinkText: `lgr.fyi/${this.$props.link.suffix}`
+      shortLink: `${CLIENT_URL}/${this.$props.link.suffix}`,
+      shortLinkText: `${CLIENT_URL_SHORT}/${this.$props.link.suffix}`
     };
   }
 })

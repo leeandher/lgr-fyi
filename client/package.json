@@ -1,7 +1,6 @@
 {
   "name": "lgr-fyi-client",
   "version": "2.0.0",
-  "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,7 +8,7 @@
   },
   "dependencies": {
     "core-js": "2.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "4.17.15",
     "register-service-worker": "1.6.2",
     "vue": "2.6.10",
     "vue-class-component": "7.0.2",

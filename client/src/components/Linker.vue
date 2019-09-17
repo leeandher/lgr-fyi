@@ -62,7 +62,9 @@ class Linker extends Vue {
       localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "[]";
     this.$data.history = JSON.parse(oldHistory) || [];
     // Fetch an update on clicks
-    const bodyArray: string[] = this.$data.history.map(({ suffix }) => suffix);
+    const bodyArray: string[] = this.$data.history.map(
+      ({ suffix }: { suffix: string }) => suffix
+    );
     const body = JSON.stringify({ suffixes: bodyArray });
     const res = await fetch(`${API_URL}/history`, {
       headers: { "Content-Type": "application/json" },
@@ -70,11 +72,11 @@ class Linker extends Vue {
       body
     });
     const data = await res.json();
-    const links: ILink[] = data.map(({ _id, origin, suffix, clicks }) => ({
-      _id,
-      origin,
-      suffix,
-      clicks
+    const links: ILink[] = data.map((link: ILink) => ({
+      _id: link._id,
+      origin: link.origin,
+      suffix: link.suffix,
+      clicks: link.clicks
     }));
     this.$data.history = links;
     links.forEach(this.loadIntoHistory);
