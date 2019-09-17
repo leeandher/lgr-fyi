@@ -59,3 +59,11 @@ exports.createShortLink = async (req, res) => {
   const link = await new Link({ origin, suffix }).save()
   return res.json(link)
 }
+
+// Get data for the history
+exports.getData = async (req, res) => {
+  const { suffixes } = req.body
+  const linksPromises = suffixes.map(suffix => Link.findOne({ suffix }))
+  const links = await Promise.all(linksPromises)
+  return res.json(links)
+}

@@ -14,6 +14,7 @@ router.post(
   catchErrors(linkController.returnExistingLink),
   catchErrors(linkController.createShortLink),
 )
+router.post('/api/history', catchErrors(linkController.getData))
 router.get(
   '/:suffix',
   catchErrors(redirectController.increaseClicks),

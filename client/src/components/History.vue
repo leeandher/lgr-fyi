@@ -26,6 +26,9 @@ import { ILink } from "../utils";
 class History extends Vue {
   @Prop({ required: true }) public refresh!: () => void;
   @Prop({ required: true }) private links!: ILink[];
+  private created() {
+    this.$props.refresh();
+  }
 }
 
 export default History;

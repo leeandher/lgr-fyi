@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import findIndex from "lodash/findIndex";
 import History from "./History.vue";
 import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
 
@@ -55,10 +56,28 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
   }
 })
 class Linker extends Vue {
-  public loadHistory(): void {
-    const oldHistory =
+  public async loadHistory(): Promise<void> {
+    // Load whatevers in localStorage
+    const oldHistory: string =
       localStorage.getItem(SUPER_MEGA_SECRET_ULTRA_KEY) || "[]";
     this.$data.history = JSON.parse(oldHistory) || [];
+    // Fetch an update on clicks
+    const bodyArray: string[] = this.$data.history.map(({ suffix }) => suffix);
+    const body = JSON.stringify({ suffixes: bodyArray });
+    const res = await fetch(`${API_URL}/history`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body
+    });
+    const data = await res.json();
+    const links: ILink[] = data.map(({ _id, origin, suffix, clicks }) => ({
+      _id,
+      origin,
+      suffix,
+      clicks
+    }));
+    this.$data.history = links;
+    links.forEach(this.loadIntoHistory);
   }
   private created() {
     this.loadHistory();
@@ -92,14 +111,16 @@ class Linker extends Vue {
     };
     const history = this.$data.history || [];
 
-    // Don't add it to history if its already there
-    const isLinkPresent = history.some(
-      ({ _id }: { _id: string }) => link._id === _id
-    );
-    if (isLinkPresent) return;
+    const linkIndex = findIndex(history, link);
+    if (linkIndex > -1) {
+      // If in history, update the item
+      history[linkIndex] = link;
+    } else {
+      // Otherwise, add it
+      history.unshift(link);
+    }
 
-    // Otherwise update history
-    history.unshift(link);
+    // Update history
     this.$data.history = history;
     localStorage.setItem(
       SUPER_MEGA_SECRET_ULTRA_KEY,
