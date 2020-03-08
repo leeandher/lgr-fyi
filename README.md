@@ -16,3 +16,21 @@ The frontend is actually a **Vue** app because I've been doing a lot of _React_ 
 
 The main difficulty that came from deployment, so I actually wrote a little blog post about it, which I welcome you to check out! [leander.xyz/blog/real-deployment](https://leander.xyz/blog/real-deployment)
 
+
+## Redeployment (Edit)
+
+If you're ever making changes (@leeandher in the future), these are the steps you need to take to update the DO droplet and not cause downtime.
+
+After connecting to the server and pulling the latest changes...
+
+If it's a server-side change (/server):
+```shell
+# Start a new task with the 'start-x' command
+# pm2 start npm --name "lgr.fyi" -- run start-x
+# To reload the task
+pm2 reload lgr.fyi
+``` 
+If it's client-side (/client):
+```shell
+npm run build
+```
