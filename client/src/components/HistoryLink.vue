@@ -1,6 +1,6 @@
 <template>
   <div class="item-row">
-    <button type="button" class="copy item" v-clipboard:copy="shortLinkText">🔗</button>
+    <button type="button" class="copy item" v-clipboard:copy="shortLink">🔗</button>
     <p class="suffix item">
       <a :href="shortLink">{{shortLinkText}}</a>
     </p>
