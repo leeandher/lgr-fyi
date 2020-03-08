@@ -1,45 +1,44 @@
-const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 
 // Define the Link schema
 const linkSchema = new mongoose.Schema({
   origin: {
     type: String,
-    lowercase: true,
     trim: true,
-    required: true,
+    required: true
   },
   clicks: {
     type: Number,
     min: 0,
     default: 0,
-    required: true,
+    required: true
   },
   suffix: {
     type: String,
     trim: true,
     unique: true,
-    required: true,
+    required: true
   },
   createdAt: {
     type: Date,
     default: Date.now,
-    required: true,
+    required: true
   },
   updatedAt: {
     type: Date,
     default: Date.now,
-    required: true,
-  },
-})
+    required: true
+  }
+});
 
 // Create the virtual 'shortLink' field
-linkSchema.virtual('shortLink').get(function() {
-  return `${process.env.CLIENT_URL}/${this.suffix}`
-})
+linkSchema.virtual("shortLink").get(function() {
+  return `${process.env.CLIENT_URL}/${this.suffix}`;
+});
 
 // Define the indexes
-linkSchema.index({ origin: 'text' })
+linkSchema.index({ origin: "text" });
 
 // Export the model
-module.exports = mongoose.model('Link', linkSchema)
+module.exports = mongoose.model("Link", linkSchema);
