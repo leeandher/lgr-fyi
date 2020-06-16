@@ -23,9 +23,23 @@
     </p>
     <br />
     <p>
-      <span>Well, you came to the right place</span>
+      <span class="strike">Well, you came to the right place</span>
       <span class="red">.</span>
     </p>
+    <div class="shadow">
+      <p>
+        <span>Well actually, you're a little late</span>
+        <span class="red">.</span>
+      </p>
+      <p>
+        <span>This project has reached its end of life since, I'm lazy and don't want to spend 💸 to keep it up</span>
+        <span class="red">.</span>
+      </p>
+      <p>
+        <span>Maybe next time, you intreped internet explorer</span>
+        <span class="red">.</span>
+      </p>
+    </div>
     <hr />
   </div>
 </template>
@@ -55,9 +69,17 @@ export default Description;
 p {
   margin: 0.5rem;
 }
+.strike {
+  text-decoration: line-through;
+}
 .red {
   font-size: 2.5rem;
   line-height: 0;
+}
+.shadow {
+  display: inline-block;
+  padding: 1rem;
+  background: rgba(255, 99, 71, 0.2);
 }
 .long-link {
   white-space: nowrap;

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <form @submit.prevent.stop="onSubmit">
-      <fieldset :disabled="loading" :aria-busy="loading">
+      <fieldset :disabled="loading || disabled" :aria-busy="loading">
         <label for="origin">
           <span>Original Link</span>
           <input
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import findIndex from "lodash/findIndex";
 import History from "./History.vue";
 import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
@@ -42,6 +42,7 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
   components: {
     History
   },
+
   data() {
     return {
       origin: "",
@@ -56,6 +57,9 @@ import { SUPER_MEGA_SECRET_ULTRA_KEY, API_URL, ILink, IError } from "../utils";
   }
 })
 class Linker extends Vue {
+  @Prop({ default: false })
+  private disabled?: boolean;
+
   public async loadHistory(): Promise<void> {
     // Load whatevers in localStorage
     const oldHistory: string =
@@ -175,8 +179,9 @@ fieldset {
   padding: 0;
   border: 0;
   width: auto;
-  &[aria-busy="true"] {
-    opacity: 0.5;
+  &[aria-busy="true"],
+  &:disabled {
+    opacity: 0.7;
   }
 }
 label {

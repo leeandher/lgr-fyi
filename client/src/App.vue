@@ -6,7 +6,7 @@
         <Error :error="error" :suffix="suffix" />
       </div>
       <div v-else>
-        <Linker />
+        <Linker disabled />
         <Description />
         <Seller />
       </div>
