@@ -36,7 +36,7 @@
         <span class="red">.</span>
       </p>
       <p>
-        <span>Maybe next time, you intreped internet explorer</span>
+        <span>Maybe next time, you intrepid internet explorer</span>
         <span class="red">.</span>
       </p>
     </div>
